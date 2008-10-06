@@ -12,9 +12,9 @@ rec {
     };
     HelloWorldService = rec {
         name = "HelloWorldService";
-        target = lib.findTarget {inherit distribution; serviceName = "HelloService";};	
+        HelloWorldMachine = lib.findTarget {inherit distribution; serviceName = "HelloService";};	
         pkg = pkgs.HelloWorldService
-	  {HelloServiceHostname = target.hostname; HelloServicePort = target.tomcatPort;};
+	  {HelloServiceHostname = HelloWorldMachine.hostname; HelloServicePort = HelloWorldMachine.tomcatPort;};
         dependsOn = [ HelloService ];
     };
 }
