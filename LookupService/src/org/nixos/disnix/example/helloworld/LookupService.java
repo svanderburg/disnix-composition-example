@@ -1,6 +1,5 @@
 package org.nixos.disnix.example.helloworld;
 
-import java.util.*;
 import org.apache.axiom.om.*;
 import org.apache.axiom.om.impl.builder.*;
 import org.apache.axiom.om.xpath.*;
