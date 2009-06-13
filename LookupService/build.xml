@@ -1,0 +1,44 @@
+<project name="LookupService" basedir="." default="compile">
+	<property name="deploybuild.dir" value="bin" />
+	
+	<property environment="env"/>
+	
+	<condition property="AXIS2_LIB" value="${env.AXIS2_LIB}">
+		<isset property="env.AXIS2_LIB"/>
+	</condition>
+	
+	<path id="service.classpath">
+		<fileset dir="${basedir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${AXIS2_LIB}">
+    		<include name="*.jar"/>
+    	</fileset>
+	</path>
+
+	<target name="compile">
+		<mkdir dir="${deploybuild.dir}"/>
+
+		<javac debug="on"
+			   fork="true"
+			   destdir="${deploybuild.dir}"
+			   srcdir="${basedir}/src"
+			   classpathref="service.classpath" />
+	</target>
+
+	<target name="generate.service.aar" depends="compile">		
+		<mkdir dir="${deploybuild.dir}/META-INF" />
+		<copy toDir="${deploybuild.dir}/META-INF">
+			<fileset dir="META-INF" includes="*" />			
+		</copy>
+		
+		<jar destfile="LookupService.aar">			
+			<fileset dir="${deploybuild.dir}" includes="META-INF/* org/nixos/disnix/example/helloworld/*" />
+		</jar>
+	</target>
+	
+	<target name="clean">
+		<delete file="LookupService.aar" />
+		<delete dir="${deploybuild.dir}" />
+	</target>
+</project>
