@@ -23,8 +23,8 @@ public class HelloServiceConnector
 	public String getHello() throws AxisFault
 	{
 		QName operation = new QName(NAME_SPACE, "getHello");
-		Object[] args_param = new Object[] {};
-		Class<?>[] returnTypes = new Class[] { String.class };
+		Object[] args_param = {};
+		Class<?>[] returnTypes = { String.class };
 		Object[] response = serviceClient.invokeBlocking(operation, args_param, returnTypes);
 		return (String)response[0];
 	}

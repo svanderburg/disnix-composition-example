@@ -7,9 +7,9 @@ public class HelloWorldService
 	
 	public HelloWorldService() throws Exception
 	{
-		/* Read the target end point reference of the HelloService from the properties file */
+		/* Read the target end point reference of the hello service from the properties file */
 		Properties props = new Properties();
-		props.load(this.getClass().getResourceAsStream("helloworldservice.properties"));
+		props.load(this.getClass().getResourceAsStream("helloservice.properties"));
 		String targetEPR = props.getProperty("helloservice.targetEPR");
 		
 		/* Create a connector object */
