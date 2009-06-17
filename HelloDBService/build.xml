@@ -1,19 +1,10 @@
 <project name="HelloDBService" basedir="." default="compile">
 	<property name="deploybuild.dir" value="bin" />
 	
-	<property environment="env"/>
-	
-	<condition property="AXIS2_LIB" value="${env.AXIS2_LIB}">
-		<isset property="env.AXIS2_LIB"/>
-	</condition>
-	
 	<path id="service.classpath">
 		<fileset dir="${basedir}">
 			<include name="*.jar" />
 		</fileset>
-		<fileset dir="${AXIS2_LIB}">
-    		<include name="*.jar"/>
-    	</fileset>
 	</path>
 
 	<target name="compile">
