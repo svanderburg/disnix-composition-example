@@ -9,7 +9,7 @@ public class HelloWorldService
 	{
 		/* Read the target end point reference of the hello service from the properties file */
 		Properties props = new Properties();
-		props.load(this.getClass().getResourceAsStream("helloservice.properties"));
+		props.load(this.getClass().getResourceAsStream("helloworldservice.properties"));
 		String targetEPR = props.getProperty("helloservice.targetEPR");
 		
 		/* Create a connector object */
