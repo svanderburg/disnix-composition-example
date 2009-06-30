@@ -1,16 +1,33 @@
 package org.nixos.disnix.example.helloworld;
-
 import javax.xml.namespace.*;
+
+import org.apache.axis2.AxisFault;
 import org.apache.axis2.addressing.*;
 import org.apache.axis2.client.*;
 import org.apache.axis2.rpc.client.*;
 
+/**
+ * Provides an one-on-one interface to the Hello WebService.
+ * 
+ * This connector provides dynamic invocation, because it uses
+ * a LookupService instance to retrieve the location of the HelloService,
+ * which allows the location of the HelloService to be changed,
+ * without redeployment.
+ */
 public class HelloServiceDynamicConnector
 {
+	/** Namespace of all operation names */
 	private static final String NAME_SPACE = "http://helloworld.example.disnix.nixos.org";
 	
+	/** Service client that sends all requests to the Hello web service */
 	private RPCServiceClient lookupServiceClient;
 	
+	/**
+	 * URL of the target end point of the LookupService
+	 * 
+	 * @param lookupServiceURL URL of the target end point of the LookupService
+	 * @throws Exception If some error occurs
+	 */
 	public HelloServiceDynamicConnector(String lookupServiceURL) throws Exception
 	{
 		lookupServiceClient = new RPCServiceClient();
@@ -19,6 +36,15 @@ public class HelloServiceDynamicConnector
 		options.setTo(targetEPR);
 	}
 	
+	/**
+	 * Creates a RPCServiceClient that connects to the given web service.
+	 * This method invokes the LookupService to retrieve the location
+	 * of the specified web service.
+	 * 
+	 * @param name Name of the web service to connect to
+	 * @return RPCServiceClient which connects to the given web service
+	 * @throws Exception If some error occurs or if the web service cannot be found
+	 */
 	private RPCServiceClient createRPCService(String name) throws Exception
 	{
 		/* Receive URL of HelloService from the LookupService */
@@ -28,7 +54,7 @@ public class HelloServiceDynamicConnector
 		Object[] response = lookupServiceClient.invokeBlocking(operation, args_param, returnTypes);
 		String helloServiceURL = (String)response[0];
 		
-		/* Create a RPC service client instance for the received Hello Service URL */
+		/* Create an RPC service client instance for the received Hello Service URL */
 		RPCServiceClient serviceClient = new RPCServiceClient();
 		Options options = serviceClient.getOptions();
 		EndpointReference targetEPR = new EndpointReference(helloServiceURL);
@@ -38,10 +64,18 @@ public class HelloServiceDynamicConnector
 		return serviceClient;
 	}
 	
+	/**
+	 * Retrieves the 'hello' string from the Hello WebService
+	 * 
+	 * @return Hello string
+	 * @throws AxisFault If the request fails
+	 */
 	public String getHello() throws Exception
 	{
+		/* Create a RPCServiceClient which connects to a HelloService instance */
 		RPCServiceClient serviceClient = createRPCService("HelloService");
 		
+		/* Invoke the getHello operation on the HelloService */
 		QName operation = new QName(NAME_SPACE, "getHello");
 		Object[] args_param = {};
 		Class<?>[] returnTypes = { String.class };
