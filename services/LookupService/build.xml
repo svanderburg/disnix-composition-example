@@ -43,6 +43,11 @@
 			<fileset dir="META-INF" includes="*" />			
 		</copy>
 		
+		<!-- Copy all XML files to the bin directory -->
+		<copy toDir="${deploybuild.dir}/org/nixos/disnix/example/helloworld">
+			<fileset dir="src/org/nixos/disnix/example/helloworld" includes="*.xml" />			
+		</copy>
+		
 		<!-- Create an archive with all relevant files from the bin directory -->
 		<jar destfile="LookupService.aar">			
 			<fileset dir="${deploybuild.dir}" includes="META-INF/* org/nixos/disnix/example/helloworld/*" />
