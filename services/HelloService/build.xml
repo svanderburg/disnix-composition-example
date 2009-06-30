@@ -1,12 +1,16 @@
 <project name="HelloService" basedir="." default="compile">
+	<!-- Sets the deploy/build directory to bin -->
 	<property name="deploybuild.dir" value="bin" />
 	
+	<!-- Sets the deploy/build directory to bin -->
 	<path id="service.classpath">
+		<!-- Compiles all the Java sources and stores the output in the bin directory -->
 		<fileset dir="${basedir}">
 			<include name="*.jar" />
 		</fileset>
 	</path>
 
+	<!-- Compiles all the Java sources and stores the output in the bin directory -->
 	<target name="compile">
 		<mkdir dir="${deploybuild.dir}"/>
 
@@ -17,17 +21,21 @@
 			   classpathref="service.classpath" />
 	</target>
 
-	<target name="generate.service.aar" depends="compile">		
+	<!-- Generates an Axis2 archive for this webservice -->
+	<target name="generate.service.aar" depends="compile">
+		<!-- Copy all meta data to the bin directory -->
 		<mkdir dir="${deploybuild.dir}/META-INF" />
 		<copy toDir="${deploybuild.dir}/META-INF">
 			<fileset dir="META-INF" includes="*" />			
 		</copy>
 		
+		<!-- Create an archive with all relevant files from the bin directory -->
 		<jar destfile="HelloService.aar">			
 			<fileset dir="${deploybuild.dir}" includes="META-INF/* org/nixos/disnix/example/helloworld/*" />
 		</jar>
 	</target>
 	
+	<!-- Create an archive with all relevant files from the bin directory -->
 	<target name="clean">
 		<delete file="HelloService.aar" />
 		<delete dir="${deploybuild.dir}" />
