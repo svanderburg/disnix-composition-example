@@ -1,3 +1,7 @@
+/*
+ * This Nix expression maps services from a service Nix expression to 
+ * machines described in an infrastructure Nix expression.
+ */
 {services, infrastructure}:
 
 [

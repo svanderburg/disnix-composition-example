@@ -1,5 +1,14 @@
+/*
+ * This Nix expression captures all the components of a distributed system that
+ * can be installed on machines in a network.
+ *
+ * This model also captures the inter-dependencies of a service and its type
+ * which is used to decide how to activate and deactive services. 
+ */
+ 
 {distribution}:
 
+# Import the packages model of the Hello World example, which captures the intra-dependencies
 let pkgs = import ../top-level/all-packages.nix;
 in
 rec {

@@ -1,3 +1,9 @@
+/*
+ * This Nix expression composes all the packages of the Hello World example.
+ * Essentially this model captures all the intra-dependencies of a distributed system.
+ */
+
+# Imports the top-level expression from Nixpkgs
 let pkgs = import (builtins.getEnv "NIXPKGS_ALL") {};
 in
 with pkgs;

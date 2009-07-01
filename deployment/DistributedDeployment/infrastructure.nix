@@ -1,3 +1,6 @@
+/*
+ * This Nix expression captures all the machines in the network and its properties
+ */
 {
   test1 = {
     hostname = "test1.localhost";
