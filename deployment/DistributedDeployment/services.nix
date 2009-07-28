@@ -9,7 +9,7 @@
 {distribution}:
 
 # Import the packages model of the Hello World example, which captures the intra-dependencies
-let pkgs = import ../top-level/all-packages.nix;
+let pkgs = import ../top-level/all-packages.nix { inherit distribution; };
 in
 rec {
   HelloService = {
@@ -45,19 +45,19 @@ rec {
     type = "webservice";
   };
     
+  HelloMySQLDB = {
+    name = "HelloMySQLDB";
+    pkg = pkgs.HelloMySQLDB;
+    dependsOn = {};
+    type = "mysql-database";
+  };
+
   HelloDBService = {
     name = "HelloService";
     pkg = pkgs.HelloDBService;
     dependsOn = {
-      inherit MySQLService;
+      inherit HelloMySQLDB;
     };
     type = "webservice";
-  };
-
-  MySQLService = {
-    name = "MySQLService";
-    pkg = pkgs.mysql;
-    dependsOn = {};
-    type = "mysql";
   };
 }

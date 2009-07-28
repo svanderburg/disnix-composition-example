@@ -5,7 +5,7 @@ stdenv.mkDerivation {
   src = ../../../services/LookupService;
   buildInputs = [ apacheAnt ];
   AXIS2_LIB = "${axis2}/share/java/axis2";
-  buildPhase = ''  
+  buildPhase = ''
     ant generate.service.aar
   '';
   installPhase = ''
