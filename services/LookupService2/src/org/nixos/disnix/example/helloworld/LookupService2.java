@@ -49,7 +49,7 @@ public class LookupService2
 			
 			/* 
 			 * Iterate over all sub elements of a service, which is
-			 * a 'name' and an 'URL' element and put them in string
+			 * a 'name' and an 'URL' element and put them in strings
 			 */
 			while(iterator.hasNext())
 			{
