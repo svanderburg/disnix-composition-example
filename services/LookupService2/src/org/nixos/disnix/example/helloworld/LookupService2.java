@@ -89,7 +89,7 @@ public class LookupService2
 		{
 			/*
 			 * If the key does not exists, create a new empty
-			 * list and the given URL to it
+			 * list and put the given URL to it
 			 */
 			ArrayList<String> urls = new ArrayList<String>();
 			urls.add(url);
