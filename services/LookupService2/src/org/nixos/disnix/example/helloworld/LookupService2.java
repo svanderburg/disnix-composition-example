@@ -68,8 +68,8 @@ public class LookupService2
 	
 	/**
 	 * Adds a service element in the hash map. If the keys
-	 * exists it will be pushed onto the stack. Otherwise
-	 * a new stack is created and with the given URL.
+	 * exists it will be stored in a list. Otherwise
+	 * a new list is created and with the given URL.
 	 * 
 	 * @param name Name of the web service
 	 * @param url URL of the web service
@@ -79,8 +79,8 @@ public class LookupService2
 		if(locations.containsKey(name))
 		{
 			/* 
-			 * If the key already exists, put the location onto
-			 * the stack
+			 * If the key already exists, put the location in
+			 * the list
 			 */
 			ArrayList<String> urls = locations.get(name);
 			urls.add(url);
@@ -89,7 +89,7 @@ public class LookupService2
 		{
 			/*
 			 * If the key does not exists, create a new empty
-			 * stack and put the given URL onto it
+			 * list and the given URL to it
 			 */
 			ArrayList<String> urls = new ArrayList<String>();
 			urls.add(url);
@@ -106,13 +106,13 @@ public class LookupService2
 	 */
 	public synchronized String getServiceURL(String name) throws Exception
 	{
-		/* Retrieve location stack from the hash map */
+		/* Retrieve location list from the hash map */
 		ArrayList<String> urls = locations.get(name);
 		
-		/* Retrieve the first location from the stack */
+		/* Retrieve the first location from the list */
 		String url = urls.remove(0);
 		
-		/* Put the retrieved URL to the end of the stack */
+		/* Put the retrieved URL to the end of the list */
 		urls.add(url);
 		
 		/* Return the retrieved URL */
