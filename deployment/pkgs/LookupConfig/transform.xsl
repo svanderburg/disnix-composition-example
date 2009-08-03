@@ -6,7 +6,7 @@
       <xsl:for-each select="attrs">
 	<service>
 	  <name><xsl:value-of select="attr[@name='service']/string/@value" /></name>
-	  <URL>http://<xsl:value-of select="attr[@name='target']/string/@value" />:<xsl:value-of select="attr[@name='tomcatPort']/int/@value" />/axis2/services/<xsl:value-of select="attr[@name='name']/string/@value" /></URL>
+	  <URL>http://<xsl:value-of select="attr[@name='target']/string/@value" />:<xsl:value-of select="attr[@name='tomcatPort']/int/@value" />/axis2/services/<xsl:value-of select="attr[@name='service']/string/@value" /></URL>
 	</service>
       </xsl:for-each>
     </lookupservice>

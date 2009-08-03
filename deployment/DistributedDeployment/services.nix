@@ -9,14 +9,16 @@
 {distribution}:
 
 # Import the packages model of the Hello World example, which captures the intra-dependencies
-let pkgs = import ../top-level/all-packages.nix { inherit distribution; };
+let pkgs = import ../top-level/all-packages.nix { 
+   inherit distribution; # Pass distribution model to the packages model, so that the lookup services can use them
+};
 in
 rec {
   HelloService = {
     name = "HelloService";
     pkg = pkgs.HelloService;
     dependsOn = {};
-    type = "webservice";
+    type = "axis2-webservice";
   };
   
   HelloWorldService = {
@@ -25,14 +27,14 @@ rec {
     dependsOn = {
       inherit HelloService;
     };
-    type = "webservice";
+    type = "axis2-webservice";
   };
   
   LookupService = {
     name = "LookupService";
     pkg = pkgs.LookupService;
     dependsOn = {};
-    type = "webservice";
+    type = "axis2-webservice";
   };
   
   HelloWorldService2 = {
@@ -42,7 +44,7 @@ rec {
       inherit LookupService;
       inherit HelloService;
     };
-    type = "webservice";
+    type = "axis2-webservice";
   };
     
   HelloMySQLDB = {
@@ -53,11 +55,11 @@ rec {
   };
 
   HelloDBService = {
-    name = "HelloService";
+    name = "HelloDBService";
     pkg = pkgs.HelloDBService;
     dependsOn = {
       inherit HelloMySQLDB;
     };
-    type = "webservice";
+    type = "axis2-webservice";
   };
 }
