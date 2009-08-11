@@ -43,6 +43,11 @@
 			<fileset dir="META-INF" includes="*" />			
 		</copy>
 		
+		<!-- Copy all properties files to the bin directory -->
+		<copy toDir="${deploybuild.dir}/org/nixos/disnix/example/helloworld">
+			<fileset dir="src/org/nixos/disnix/example/helloworld" includes="*.properties" />			
+		</copy>
+		
 		<!-- Create an archive with all relevant files from the bin directory -->
 		<jar destfile="HelloDBService.aar">			
 			<fileset dir="${deploybuild.dir}" includes="META-INF/* org/nixos/disnix/example/helloworld/*" />
