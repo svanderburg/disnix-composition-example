@@ -62,4 +62,11 @@ rec {
     };
     type = "axis2-webservice";
   };
+  
+  LookupService2 = {
+    name = "LookupService2";
+    pkg = pkgs.LookupService2;
+    dependsOn = {};
+    type = "axis2-webservice";
+  };
 }
