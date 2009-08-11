@@ -1,5 +1,4 @@
 {stdenv, apacheAnt, axis2}:
-{HelloMySQLDB ? null}:
 
 stdenv.mkDerivation {
   name = "HelloDBService";

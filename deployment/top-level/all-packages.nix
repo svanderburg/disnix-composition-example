@@ -38,9 +38,13 @@ rec {
     
   HelloMySQLDB = import ../pkgs/HelloMySQLDB {
     inherit stdenv;
-  };
+  };    
   
   HelloDBService = import ../pkgs/HelloDBService {
     inherit stdenv apacheAnt axis2;
+  };
+  
+  HelloDBServiceWrapper = import ../pkgs/HelloDBService/wrapper.nix {
+    inherit stdenv HelloDBService;
   };  
 }

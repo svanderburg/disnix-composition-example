@@ -56,7 +56,7 @@ rec {
 
   HelloDBService = {
     name = "HelloDBService";
-    pkg = pkgs.HelloDBService;
+    pkg = pkgs.HelloDBServiceWrapper;
     dependsOn = {
       inherit HelloMySQLDB;
     };
