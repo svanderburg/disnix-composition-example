@@ -10,7 +10,7 @@ props.load(this.getClass().getResourceAsStream("/org/nixos/disnix/example/hellow
 String targetEPR = props.getProperty("helloworldservice.targetEPR");
 
 /* Create a connector object */
-HelloWorldConnector connector = new HelloWorldConnector(targetEPR);
+HelloWorldServiceConnector connector = new HelloWorldServiceConnector(targetEPR);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>

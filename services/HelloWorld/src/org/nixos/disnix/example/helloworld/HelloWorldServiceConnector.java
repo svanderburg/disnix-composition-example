@@ -8,9 +8,9 @@ import org.apache.axis2.rpc.client.*;
 /**
  * Provides an one-on-one interface to the HelloWorld WebService
  */
-public class HelloWorldConnector
+public class HelloWorldServiceConnector
 {
-	/** Service client that sends all requests to the Hello WebService */
+	/** Service client that sends all requests to the HelloWorld WebService */
 	private RPCServiceClient serviceClient;
 	
 	/** Namespace of all operation names */
@@ -21,7 +21,7 @@ public class HelloWorldConnector
 	 * 
 	 * @param serviceURL URL of the target end point of the HelloWorldService
 	 */
-	public HelloWorldConnector(String serviceURL) throws Exception
+	public HelloWorldServiceConnector(String serviceURL) throws Exception
 	{
 		serviceClient = new RPCServiceClient();
 		Options options = serviceClient.getOptions();
