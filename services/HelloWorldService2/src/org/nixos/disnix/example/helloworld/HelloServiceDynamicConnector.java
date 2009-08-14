@@ -1,6 +1,5 @@
 package org.nixos.disnix.example.helloworld;
 import javax.xml.namespace.*;
-
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.addressing.*;
 import org.apache.axis2.client.*;
@@ -19,7 +18,7 @@ public class HelloServiceDynamicConnector
 	/** Namespace of all operation names */
 	private static final String NAME_SPACE = "http://helloworld.example.disnix.nixos.org";
 	
-	/** Service client that sends all requests to the Hello web service */
+	/** Service client that sends all requests to the lookup web service */
 	private RPCServiceClient lookupServiceClient;
 	
 	/**
