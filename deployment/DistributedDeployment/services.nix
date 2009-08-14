@@ -30,6 +30,15 @@ rec {
     type = "axis2-webservice";
   };
   
+  HelloWorld = {
+    name = "HelloWorld";
+    pkg = pkgs.HelloWorld;
+    dependsOn = {
+      inherit HelloWorldService;
+    };
+    type = "tomcat-webapplication";
+  };
+  
   LookupService = {
     name = "LookupService";
     pkg = pkgs.LookupService;

@@ -19,6 +19,10 @@ rec {
   HelloWorldService = import ../pkgs/HelloWorldService {
     inherit stdenv apacheAnt axis2;
   };
+
+  HelloWorld = import ../pkgs/HelloWorld {
+    inherit stdenv apacheAnt axis2;
+  };
   
   LookupConfig = if distribution == null then null else import ../pkgs/LookupConfig {
     inherit stdenv libxslt distribution;
@@ -35,7 +39,7 @@ rec {
   LookupService2 = import ../pkgs/LookupService2 {
     inherit stdenv apacheAnt axis2 LookupConfig;
   };
-    
+
   HelloMySQLDB = import ../pkgs/HelloMySQLDB {
     inherit stdenv;
   };    
