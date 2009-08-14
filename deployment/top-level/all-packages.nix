@@ -36,10 +36,10 @@ rec {
     inherit stdenv apacheAnt axis2;
   };
 
-  LookupService2 = import ../pkgs/LookupService2 {
-    inherit stdenv apacheAnt axis2 LookupConfig;
+  HelloWorld2 = import ../pkgs/HelloWorld2 {
+    inherit stdenv apacheAnt axis2;
   };
-
+  
   HelloMySQLDB = import ../pkgs/HelloMySQLDB {
     inherit stdenv;
   };    
@@ -50,5 +50,9 @@ rec {
   
   HelloDBServiceWrapper = import ../pkgs/HelloDBService/wrapper.nix {
     inherit stdenv HelloDBService;
-  };  
+  };
+  
+  LookupService2 = import ../pkgs/LookupService2 {
+    inherit stdenv apacheAnt axis2 LookupConfig;
+  };
 }

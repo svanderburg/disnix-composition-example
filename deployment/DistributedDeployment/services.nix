@@ -47,13 +47,23 @@ rec {
   };
   
   HelloWorldService2 = {
-    name = "HelloWorldService";
+    name = "HelloWorldService2";
     pkg = pkgs.HelloWorldService2;
     dependsOn = {
       inherit LookupService;
       inherit HelloService;
     };
     type = "axis2-webservice";
+  };
+  
+  HelloWorld2 = {
+    name = "HelloWorld2";
+    pkg = pkgs.HelloWorld2;
+    dependsOn = {
+      inherit HelloWorldService2;
+      inherit LookupService;
+    };
+    type = "tomcat-webapplication";
   };
     
   HelloMySQLDB = {
