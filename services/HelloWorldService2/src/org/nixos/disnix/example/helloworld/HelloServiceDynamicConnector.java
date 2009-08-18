@@ -21,14 +21,18 @@ public class HelloServiceDynamicConnector
 	/** Service client that sends all requests to the lookup web service */
 	private RPCServiceClient lookupServiceClient;
 	
+	/** Identifier of the service we have to query from the lookup service */
+	private String serviceName;
+	
 	/**
 	 * URL of the target end point of the LookupService
 	 * 
 	 * @param lookupServiceURL URL of the target end point of the LookupService
 	 * @throws Exception If some error occurs
 	 */
-	public HelloServiceDynamicConnector(String lookupServiceURL) throws Exception
+	public HelloServiceDynamicConnector(String lookupServiceURL, String serviceName) throws Exception
 	{
+		this.serviceName = serviceName;
 		lookupServiceClient = new RPCServiceClient();
 		Options options = lookupServiceClient.getOptions();
 		EndpointReference targetEPR = new EndpointReference(lookupServiceURL);
@@ -72,7 +76,7 @@ public class HelloServiceDynamicConnector
 	public String getHello() throws Exception
 	{
 		/* Create a RPCServiceClient which connects to a HelloService instance */
-		RPCServiceClient serviceClient = createRPCService("HelloService");
+		RPCServiceClient serviceClient = createRPCService(serviceName);
 		
 		/* Invoke the getHello operation on the HelloService */
 		QName operation = new QName(NAME_SPACE, "getHello");

@@ -26,9 +26,10 @@ public class HelloWorldService2
 		Properties props = new Properties();
 		props.load(this.getClass().getResourceAsStream("helloworldservice2.properties"));
 		String targetEPR = props.getProperty("lookupservice.targetEPR");
+		String serviceName = props.getProperty("helloservice.identifier");
 		
 		/* Create a connector object */
-		connector = new HelloServiceDynamicConnector(targetEPR);
+		connector = new HelloServiceDynamicConnector(targetEPR, serviceName);
 	}
 	
 	/**
