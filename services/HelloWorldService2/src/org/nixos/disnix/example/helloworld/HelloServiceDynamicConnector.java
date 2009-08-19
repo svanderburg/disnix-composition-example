@@ -28,6 +28,7 @@ public class HelloServiceDynamicConnector
 	 * URL of the target end point of the LookupService
 	 * 
 	 * @param lookupServiceURL URL of the target end point of the LookupService
+	 * @param serviceName Identifier of the service we have to query from the lookup service
 	 * @throws Exception If some error occurs
 	 */
 	public HelloServiceDynamicConnector(String lookupServiceURL, String serviceName) throws Exception
