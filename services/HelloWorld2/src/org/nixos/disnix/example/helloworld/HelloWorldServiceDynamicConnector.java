@@ -15,19 +15,24 @@ import org.apache.axis2.rpc.client.*;
  */
 public class HelloWorldServiceDynamicConnector
 {	
+	/** Namespace of all operation names */
+	private static final String NAME_SPACE = "http://helloworld.example.disnix.nixos.org";
+	
 	/** Service client that sends all requests to the lookup web service */
 	private RPCServiceClient lookupServiceClient;
 	
-	/** Namespace of all operation names */
-	private static final String NAME_SPACE = "http://helloworld.example.disnix.nixos.org";
+	/** Identifier of the service we have to query from the lookup service */
+	private String serviceName;
 	
 	/**
 	 * Creates a new HelloWorldService connector instance.
 	 * 
-	 * @param serviceURL URL of the target end point of the HelloWorldService
+	 * @param lookupServiceURL URL of the target end point of the LookupService
+	 * @param serviceName Identifier of the service we have to query from the lookup service
 	 */
-	public HelloWorldServiceDynamicConnector(String lookupServiceURL) throws Exception
+	public HelloWorldServiceDynamicConnector(String lookupServiceURL, String serviceName) throws Exception
 	{
+		this.serviceName = serviceName;
 		lookupServiceClient = new RPCServiceClient();
 		Options options = lookupServiceClient.getOptions();
 		EndpointReference targetEPR = new EndpointReference(lookupServiceURL);
@@ -71,7 +76,7 @@ public class HelloWorldServiceDynamicConnector
 	public String getHelloWorld() throws Exception
 	{
 		/* Create a RPCServiceClient which connects to a HelloWorldService instance */
-		RPCServiceClient serviceClient = createRPCService("HelloWorldService2");
+		RPCServiceClient serviceClient = createRPCService(serviceName);
 		
 		/* Invoke the getHello operation on the HelloWorldService */
 		QName operation = new QName(NAME_SPACE, "getHelloWorld");
