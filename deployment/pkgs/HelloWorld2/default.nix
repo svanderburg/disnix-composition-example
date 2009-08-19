@@ -1,5 +1,5 @@
 {stdenv, apacheAnt, axis2}:
-{HelloWorldService2 ? null, LookupService ? null}:
+{HelloWorldService ? null, LookupService ? null}:
 
 stdenv.mkDerivation {
   name = "HelloWorld2";
@@ -9,7 +9,8 @@ stdenv.mkDerivation {
   buildPhase =
     (if LookupService == null then "" else ''
         # Write the connection settings of the LookupService to a properties file
-        echo "lookupservice.targetEPR=http://${LookupService.target.hostname}:${toString LookupService.target.tomcatPort}/axis2/services/${LookupService.name}" > src/org/nixos/disnix/example/helloworld/helloworld2.properties
+        ( echo "lookupservice.targetEPR=http://${LookupService.target.hostname}:${toString LookupService.target.tomcatPort}/axis2/services/${LookupService.name}"
+	  echo "helloworldservice.identifier=${HelloWorldService.name}" ) > src/org/nixos/disnix/example/helloworld/helloworld2.properties
       '') +
     ''
       # Generate the webapplication archive

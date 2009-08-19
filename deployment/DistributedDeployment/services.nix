@@ -60,7 +60,7 @@ rec {
     name = "HelloWorld2";
     pkg = pkgs.HelloWorld2;
     dependsOn = {
-      inherit HelloWorldService2;
+      HelloWorldService = HelloWorldService2;
       inherit LookupService;
     };
     type = "tomcat-webapplication";
