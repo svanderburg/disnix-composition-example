@@ -11,10 +11,10 @@ stdenv.mkDerivation {
     ensureDir $out/conf/Catalina
     cat > $out/conf/Catalina/axis2.xml <<EOF
     <Context>
-      <Resource name="jdbc/HelloDB" auth="Container" type="javax.sql.DataSource"
+      <Resource name="jdbc/HelloMySQLDB" auth="Container" type="javax.sql.DataSource"
                 maxActivate="100" maxIdle="30" maxWait="10000"
                 username="root" password="" driverClassName="com.mysql.jdbc.Driver"
-                url="jdbc:mysql://${mysqlHostname}:${toString mysqlPort}/hello?autoReconnect=true" />
+                url="jdbc:mysql://${mysqlHostname}:${toString mysqlPort}/${HelloMySQLDB.name}?autoReconnect=true" />
     </Context>
     EOF
     ln -sf ${HelloDBService}/webapps $out/webapps
