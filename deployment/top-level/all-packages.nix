@@ -3,11 +3,12 @@
  * Essentially this model captures all the intra-dependencies of a distributed system.
  */
 
-{distribution ? null # Take distribution model as optional input argument, which is needed by the lookup services
+{ distribution ? null # Take distribution model as optional input argument, which is needed by the lookup services
+, system ? builtins.currentSystem
 }:
 
 # Imports the top-level expression from Nixpkgs
-let pkgs = import (builtins.getEnv "NIXPKGS_ALL") {};
+let pkgs = import (builtins.getEnv "NIXPKGS_ALL") { inherit system; };
 in
 with pkgs;
 

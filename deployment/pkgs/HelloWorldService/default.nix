@@ -5,7 +5,7 @@ stdenv.mkDerivation {
   name = "HelloWorldService";
   src = ../../../services/HelloWorldService;
   buildInputs = [ apacheAnt ];
-  AXIS2_LIB = "${axis2}/share/java/axis2";
+  AXIS2_LIB = "${axis2}/lib";
   buildPhase =
     (if HelloService == null then "" else ''
         # Write the connection settings of the HelloService to a properties file

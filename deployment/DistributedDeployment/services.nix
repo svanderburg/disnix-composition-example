@@ -6,11 +6,12 @@
  * which is used to decide how to activate and deactive services. 
  */
  
-{distribution}:
+{distribution, system}:
 
 # Import the packages model of the Hello World example, which captures the intra-dependencies
 let pkgs = import ../top-level/all-packages.nix { 
    inherit distribution; # Pass distribution model to the packages model, so that the lookup services can use them
+   inherit system;
 };
 in
 rec {
