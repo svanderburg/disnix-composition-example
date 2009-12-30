@@ -7,6 +7,7 @@
     tomcatPort = 8080;
     mysqlPort = 3306;
     targetEPR = http://test1.localhost/axis2/services/DisnixService;
+    sshTarget = "localhost:2222";
     system = "x86_64-linux";
   };
    
@@ -15,6 +16,7 @@
     tomcatPort = 8080;
     mysqlPort = 3306;
     targetEPR = http://test2.localhost/axis2/services/DisnixService;
+    sshTarget = "localhost:2223";
     system = "i686-linux";
   };
 }
