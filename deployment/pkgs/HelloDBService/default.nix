@@ -4,7 +4,7 @@ stdenv.mkDerivation {
   name = "HelloDBService";
   src = ../../../services/HelloDBService;
   buildInputs = [ apacheAnt ];
-  AXIS2_LIB = "${axis2}/share/java/axis2";
+  AXIS2_LIB = "${axis2}/lib";
   buildPhase = ''ant generate.service.aar'';
   installPhase = ''
     ensureDir $out/webapps/axis2/WEB-INF/services

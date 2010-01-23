@@ -1,10 +1,6 @@
 {stdenv, HelloDBService}:
-{HelloMySQLDB ? null}:
+{HelloMySQLDB}:
 
-let
-  mysqlHostname = if HelloMySQLDB == null then "localhost" else HelloMySQLDB.target.hostname;
-  mysqlPort = if HelloMySQLDB == null then 3306 else if HelloMySQLDB.target.mysqlPort == null then 3306 else HelloMySQLDB.target.mysqlPort;
-in
 stdenv.mkDerivation {
   name = "HelloDBServiceWrapper";
   buildCommand = ''
@@ -13,8 +9,8 @@ stdenv.mkDerivation {
     <Context>
       <Resource name="jdbc/HelloMySQLDB" auth="Container" type="javax.sql.DataSource"
                 maxActivate="100" maxIdle="30" maxWait="10000"
-                username="root" password="" driverClassName="com.mysql.jdbc.Driver"
-                url="jdbc:mysql://${mysqlHostname}:${toString mysqlPort}/${HelloMySQLDB.name}?autoReconnect=true" />
+                username="${HelloMySQLDB.target.mysqlUsername}" password="${HelloMySQLDB.target.mysqlPassword}" driverClassName="com.mysql.jdbc.Driver"
+                url="jdbc:mysql://${HelloMySQLDB.target.hostname}:${toString (HelloMySQLDB.target.mysqlPort)}/${HelloMySQLDB.name}?autoReconnect=true" />
     </Context>
     EOF
     ln -sf ${HelloDBService}/webapps $out/webapps

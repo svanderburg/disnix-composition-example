@@ -5,7 +5,7 @@ stdenv.mkDerivation {
   name = "HelloWorldService2";
   src = ../../../services/HelloWorldService2;
   buildInputs = [ apacheAnt ];
-  AXIS2_LIB = "${axis2}/share/java/axis2";
+  AXIS2_LIB = "${axis2}/lib";
   buildPhase = (if LookupService == null then "" else ''
       # Write the connection settings of the LookupService to a properties file
       ( echo "lookupservice.targetEPR=http://${LookupService.target.hostname}:${toString LookupService.target.tomcatPort}/axis2/services/${LookupService.name}" 

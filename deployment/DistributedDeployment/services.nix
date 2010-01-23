@@ -26,7 +26,8 @@ rec {
     name = "HelloWorldService";
     pkg = pkgs.HelloWorldService;
     dependsOn = {
-      inherit HelloService;
+      #inherit HelloService;
+      HelloService = HelloDBService;
     };
     type = "axis2-webservice";
   };

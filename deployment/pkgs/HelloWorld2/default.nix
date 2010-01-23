@@ -5,7 +5,7 @@ stdenv.mkDerivation {
   name = "HelloWorld2";
   src = ../../../services/HelloWorld2;
   buildInputs = [ apacheAnt ];
-  AXIS2_LIB = "${axis2}/share/java/axis2";
+  AXIS2_LIB = "${axis2}/lib";
   buildPhase =
     (if LookupService == null then "" else ''
         # Write the connection settings of the LookupService to a properties file
