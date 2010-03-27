@@ -2,6 +2,14 @@
 	<!-- Sets the deploy/build directory to bin -->
 	<property name="deploybuild.dir" value="bin" />
 	
+	<!-- Imports the environment variables -->
+	<property environment="env" />
+	
+	<!-- Sets the location of the Axis2 web application container -->
+	<condition property="AXIS2_WEBAPP" value="${env.AXIS2_WEBAPP}">
+		<isset property="env.AXIS2_WEBAPP" />
+	</condition>
+	
 	<!-- Sets the deploy/build directory to bin -->
 	<path id="service.classpath">
 		<!-- Compiles all the Java sources and stores the output in the bin directory -->
@@ -30,14 +38,23 @@
 		</copy>
 		
 		<!-- Create an archive with all relevant files from the bin directory -->
-		<jar destfile="HelloService.aar">			
+		<mkdir dir="${deploybuild.dir}/WEB-INF/services" />
+		<jar destfile="${deploybuild.dir}/WEB-INF/services/HelloService.aar">			
 			<fileset dir="${deploybuild.dir}" includes="META-INF/* org/nixos/disnix/example/helloworld/*" />
 		</jar>
 	</target>
 	
+	<!-- Generates a Web application archive containing an Axis2 container and the Axis2 archive -->
+	<target name="generate.war" depends="generate.service.aar">		
+		<war destfile="DisnixService.war" needxmlfile="false">
+			<fileset dir="${AXIS2_WEBAPP}" />
+			<fileset dir="${deploybuild.dir}" includes="WEB-INF/services/HelloService.aar" />			
+		</war>
+	</target>
+	
 	<!-- Create an archive with all relevant files from the bin directory -->
 	<target name="clean">
-		<delete file="HelloService.aar" />
+		<delete file="HelloService.war" />
 		<delete dir="${deploybuild.dir}" />
 	</target>
 </project>

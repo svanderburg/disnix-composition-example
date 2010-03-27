@@ -11,6 +11,11 @@
 		<isset property="env.AXIS2_LIB"/>
 	</condition>
 	
+	<!-- Sets the location of the Axis2 web application container -->
+	<condition property="AXIS2_WEBAPP" value="${env.AXIS2_WEBAPP}">
+		<isset property="env.AXIS2_WEBAPP" />
+	</condition>
+	
 	<!-- Sets the classpath which is used by the Java compiler -->
 	<path id="service.classpath">
 		<!-- Add all libraries in this project to the classpath -->
@@ -49,14 +54,23 @@
 		</copy>
 		
 		<!-- Create an archive with all relevant files from the bin directory -->
-		<jar destfile="HelloDBService.aar">			
+		<mkdir dir="${deploybuild.dir}/WEB-INF/services" />
+		<jar destfile="${deploybuild.dir}/WEB-INF/services/HelloDBService.aar">			
 			<fileset dir="${deploybuild.dir}" includes="META-INF/* org/nixos/disnix/example/helloworld/*" />
 		</jar>
 	</target>
 	
+	<!-- Generates a Web application archive containing an Axis2 container and the Axis2 archive -->
+	<target name="generate.war" depends="generate.service.aar">		
+		<war destfile="HelloDBService.war" needxmlfile="false">
+			<fileset dir="${AXIS2_WEBAPP}" />
+			<fileset dir="${deploybuild.dir}" includes="WEB-INF/services/HelloDBService.aar" />			
+		</war>
+	</target>
+	
 	<!-- Removes all the generated code and generated archives -->
 	<target name="clean">
-		<delete file="HelloDBService.aar" />
+		<delete file="HelloDBService.war" />
 		<delete dir="${deploybuild.dir}" />
 	</target>
 </project>

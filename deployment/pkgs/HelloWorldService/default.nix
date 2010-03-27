@@ -6,17 +6,18 @@ stdenv.mkDerivation {
   src = ../../../services/HelloWorldService;
   buildInputs = [ apacheAnt ];
   AXIS2_LIB = "${axis2}/lib";
+  AXIS2_WEBAPP = "${axis2}/webapps/axis2";
   buildPhase =
     (if HelloService == null then "" else ''
         # Write the connection settings of the HelloService to a properties file
-        echo "helloservice.targetEPR=http://${HelloService.target.hostname}:${toString HelloService.target.tomcatPort}/axis2/services/${HelloService.name}" > src/org/nixos/disnix/example/helloworld/helloworldservice.properties
+        echo "helloservice.targetEPR=http://${HelloService.target.hostname}:${toString HelloService.target.tomcatPort}/${HelloService.name}/services/${HelloService.name}" > src/org/nixos/disnix/example/helloworld/helloworldservice.properties
       '') +
     ''
       # Generate the webapplication archive
-      ant generate.service.aar
+      ant generate.war
     '';
   installPhase = ''    
-    ensureDir $out/webapps/axis2/WEB-INF/services
-    cp *.aar $out/webapps/axis2/WEB-INF/services
+    ensureDir $out/webapps
+    cp *.war $out/webapps
   '';
 }

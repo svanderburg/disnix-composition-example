@@ -5,17 +5,18 @@ stdenv.mkDerivation {
   src = ../../../services/LookupService2;
   buildInputs = [ apacheAnt ];
   AXIS2_LIB = "${axis2}/lib";
+  AXIS2_WEBAPP = "${axis2}/webapps/axis2";
   buildPhase = 
     /* If there is a generated configuration file, use this one instead of the default */
     (if LookupConfig == null then "" else ''
       cp ${LookupConfig}/lookupserviceconfig.xml src/org/nixos/disnix/example/helloworld
     '') +
-    /* Create a service AAR file */
+    /* Create a WAR file */
     ''
-      ant generate.service.aar
+      ant generate.war
     '';
   installPhase = ''
-    ensureDir $out/webapps/axis2/WEB-INF/services
-    cp *.aar $out/webapps/axis2/WEB-INF/services
+    ensureDir $out/webapps
+    cp *.war $out/webapps
   '';
 }

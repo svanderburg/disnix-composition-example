@@ -5,9 +5,10 @@ stdenv.mkDerivation {
   src = ../../../services/HelloDBService;
   buildInputs = [ apacheAnt ];
   AXIS2_LIB = "${axis2}/lib";
-  buildPhase = ''ant generate.service.aar'';
+  AXIS2_WEBAPP = "${axis2}/webapps/axis2";
+  buildPhase = "ant generate.war";
   installPhase = ''
-    ensureDir $out/webapps/axis2/WEB-INF/services
-    cp *.aar $out/webapps/axis2/WEB-INF/services
+    ensureDir $out/webapps/axis2
+    cp *.war $out/webapps/axis2
   '';    
 }

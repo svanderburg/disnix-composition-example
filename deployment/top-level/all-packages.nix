@@ -14,7 +14,7 @@ with pkgs;
 
 rec {
   HelloService = import ../pkgs/HelloService {
-    inherit stdenv apacheAnt;
+    inherit stdenv apacheAnt axis2;
   };
   
   HelloWorldService = import ../pkgs/HelloWorldService {

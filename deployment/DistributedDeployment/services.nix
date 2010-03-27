@@ -19,7 +19,7 @@ rec {
     name = "HelloService";
     pkg = pkgs.HelloService;
     dependsOn = {};
-    type = "axis2-webservice";
+    type = "tomcat-webapplication";
   };
   
   HelloWorldService = {
@@ -29,7 +29,7 @@ rec {
       #inherit HelloService;
       HelloService = HelloDBService;
     };
-    type = "axis2-webservice";
+    type = "tomcat-webapplication";
   };
   
   HelloWorld = {
@@ -45,7 +45,7 @@ rec {
     name = "LookupService";
     pkg = pkgs.LookupService;
     dependsOn = {};
-    type = "axis2-webservice";
+    type = "tomcat-webapplication";
   };
   
   HelloWorldService2 = {
@@ -55,7 +55,7 @@ rec {
       inherit LookupService;
       inherit HelloService;
     };
-    type = "axis2-webservice";
+    type = "tomcat-webapplication";
   };
   
   HelloWorld2 = {
@@ -81,13 +81,13 @@ rec {
     dependsOn = {
       inherit HelloMySQLDB;
     };
-    type = "axis2-webservice";
+    type = "tomcat-webapplication";
   };
   
   LookupService2 = {
     name = "LookupService2";
     pkg = pkgs.LookupService2;
     dependsOn = {};
-    type = "axis2-webservice";
+    type = "tomcat-webapplication";
   };
 }
