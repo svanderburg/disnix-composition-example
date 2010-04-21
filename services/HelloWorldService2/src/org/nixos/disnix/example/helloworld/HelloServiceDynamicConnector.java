@@ -53,9 +53,9 @@ public class HelloServiceDynamicConnector
 	{
 		/* Receive URL of HelloService from the LookupService */
 		QName operation = new QName(NAME_SPACE, "getServiceURL");
-		Object[] args_param = { name };
+		Object[] args = { name };
 		Class<?>[] returnTypes = { String.class };
-		Object[] response = lookupServiceClient.invokeBlocking(operation, args_param, returnTypes);
+		Object[] response = lookupServiceClient.invokeBlocking(operation, args, returnTypes);
 		String helloServiceURL = (String)response[0];
 		
 		/* Create an RPC service client instance for the received Hello Service URL */
@@ -81,9 +81,9 @@ public class HelloServiceDynamicConnector
 		
 		/* Invoke the getHello operation on the HelloService */
 		QName operation = new QName(NAME_SPACE, "getHello");
-		Object[] args_param = {};
+		Object[] args = {};
 		Class<?>[] returnTypes = { String.class };
-		Object[] response = serviceClient.invokeBlocking(operation, args_param, returnTypes);
+		Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
 		return (String)response[0];
 	}
 }
