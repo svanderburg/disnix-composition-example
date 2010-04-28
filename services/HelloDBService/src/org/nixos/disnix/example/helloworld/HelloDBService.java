@@ -11,8 +11,14 @@ import javax.sql.*;
  */
 public class HelloDBService
 {
+	/** JNDI identifier for the database connection pool */
 	private String jndiName;
 	
+	/**
+	 * Creates a new HelloDBService instance.
+	 * 
+	 * @throws Exception If retrieving the JNDI string fails
+	 */
 	public HelloDBService() throws Exception
 	{
 		/* Read the JNDI name of the database from the properties file */
