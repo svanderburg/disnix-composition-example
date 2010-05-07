@@ -37,10 +37,22 @@ public class HelloWorldServiceConnector
 	 */
 	public String getHelloWorld() throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "getHelloWorld");
-		Object[] args = {};
-		Class<?>[] returnTypes = { String.class };
-		Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
-		return (String)response[0];
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "getHelloWorld");
+			Object[] args = {};
+			Class<?>[] returnTypes = { String.class };
+			Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
+			return (String)response[0];
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 }

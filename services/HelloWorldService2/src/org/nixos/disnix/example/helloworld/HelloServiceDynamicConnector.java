@@ -1,6 +1,6 @@
 package org.nixos.disnix.example.helloworld;
 import javax.xml.namespace.*;
-import org.apache.axis2.AxisFault;
+import org.apache.axis2.*;
 import org.apache.axis2.addressing.*;
 import org.apache.axis2.client.*;
 import org.apache.axis2.rpc.client.*;
@@ -47,25 +47,39 @@ public class HelloServiceDynamicConnector
 	 * 
 	 * @param name Name of the web service to connect to
 	 * @return RPCServiceClient which connects to the given web service
-	 * @throws Exception If some error occurs or if the web service cannot be found
+	 * @throws AxisFault If some error occurs or if the web service cannot be found
 	 */
-	private RPCServiceClient createRPCService(String name) throws Exception
+	private RPCServiceClient createRPCService(String name) throws AxisFault
 	{
-		/* Receive URL of HelloService from the LookupService */
-		QName operation = new QName(NAME_SPACE, "getServiceURL");
-		Object[] args = { name };
-		Class<?>[] returnTypes = { String.class };
-		Object[] response = lookupServiceClient.invokeBlocking(operation, args, returnTypes);
-		String helloServiceURL = (String)response[0];
+		RPCServiceClient serviceClient;
 		
-		/* Create an RPC service client instance for the received Hello Service URL */
-		RPCServiceClient serviceClient = new RPCServiceClient();
-		Options options = serviceClient.getOptions();
-		EndpointReference targetEPR = new EndpointReference(helloServiceURL);
-		options.setTo(targetEPR);
-		
-		/* Return the RPC service client instance */
-		return serviceClient;
+		try
+		{
+			/* Receive URL of HelloService from the LookupService */
+			QName operation = new QName(NAME_SPACE, "getServiceURL");
+			Object[] args = { name };
+			Class<?>[] returnTypes = { String.class };
+			Object[] response = lookupServiceClient.invokeBlocking(operation, args, returnTypes);
+			String helloServiceURL = (String)response[0];
+			
+			/* Create an RPC service client instance for the received Hello Service URL */
+			serviceClient = new RPCServiceClient();
+			Options options = serviceClient.getOptions();
+			EndpointReference targetEPR = new EndpointReference(helloServiceURL);
+			options.setTo(targetEPR);
+			
+			/* Return the RPC service client instance */
+			return serviceClient;
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	/**
@@ -74,16 +88,30 @@ public class HelloServiceDynamicConnector
 	 * @return Hello string
 	 * @throws AxisFault If the request fails
 	 */
-	public String getHello() throws Exception
+	public String getHello() throws AxisFault
 	{
-		/* Create a RPCServiceClient which connects to a HelloService instance */
-		RPCServiceClient serviceClient = createRPCService(serviceName);
+		RPCServiceClient serviceClient;
 		
-		/* Invoke the getHello operation on the HelloService */
-		QName operation = new QName(NAME_SPACE, "getHello");
-		Object[] args = {};
-		Class<?>[] returnTypes = { String.class };
-		Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
-		return (String)response[0];
+		try
+		{
+			/* Create a RPCServiceClient which connects to a HelloService instance */
+			serviceClient = createRPCService(serviceName);
+			
+			/* Invoke the getHello operation on the HelloService */
+			QName operation = new QName(NAME_SPACE, "getHello");
+			Object[] args = {};
+			Class<?>[] returnTypes = { String.class };
+			Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
+			return (String)response[0];
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 }
