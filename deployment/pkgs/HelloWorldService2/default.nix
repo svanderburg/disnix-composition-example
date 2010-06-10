@@ -17,7 +17,7 @@ stdenv.mkDerivation {
     ant generate.war
   '';
   installPhase = ''
-    ensureDir $out/webapps/axis2
-    cp *.war $out/webapps/axis2
+    ensureDir $out/webapps
+    cp *.war $out/webapps
   '';
 }

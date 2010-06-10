@@ -26,8 +26,7 @@ rec {
     name = "HelloWorldService";
     pkg = pkgs.HelloWorldService;
     dependsOn = {
-      #inherit HelloService;
-      HelloService = HelloDBService;
+      inherit HelloService;
     };
     type = "tomcat-webapplication";
   };

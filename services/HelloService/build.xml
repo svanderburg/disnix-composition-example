@@ -46,7 +46,7 @@
 	
 	<!-- Generates a Web application archive containing an Axis2 container and the Axis2 archive -->
 	<target name="generate.war" depends="generate.service.aar">		
-		<war destfile="DisnixService.war" needxmlfile="false">
+		<war destfile="HelloService.war" needxmlfile="false">
 			<fileset dir="${AXIS2_WEBAPP}" />
 			<fileset dir="${deploybuild.dir}" includes="WEB-INF/services/HelloService.aar" />			
 		</war>

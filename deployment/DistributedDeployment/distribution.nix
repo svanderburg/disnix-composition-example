@@ -5,8 +5,7 @@
 {infrastructure}:
 
 {
-  HelloMySQLDB = [ infrastructure.test2 ];
-  HelloDBService = [ infrastructure.test1 ];
+  HelloService = [ infrastructure.test1 ];
   HelloWorldService = [ infrastructure.test2 ];
   HelloWorld = [ infrastructure.test1 ];
 }
