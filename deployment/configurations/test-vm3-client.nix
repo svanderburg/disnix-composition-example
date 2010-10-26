@@ -31,11 +31,19 @@
     xserver = {
       enable = true;
       
+      displayManager = {
+        slim.enable = false;
+	auto.enable = true;
+      };
+      
       windowManager = {
+        default = "icewm";
         icewm = {
 	  enable = true;
 	};
       };
+      
+      desktopManager.default = "none";
     };
   };
   
