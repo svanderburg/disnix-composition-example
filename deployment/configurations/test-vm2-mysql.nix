@@ -26,6 +26,7 @@
 
     disnix = {
       enable = true;
+      useWebServiceInterface = true;
     };
 
     mysql = {
@@ -36,14 +37,8 @@
 
     tomcat = {
       enable = true;
-      
-      commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
-      
-      javaOpts = "-Djava.library.path=${pkgs.libmatthew_java}/lib/jni";
+      commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];      
       catalinaOpts = "-Xms64m -Xmx256m";
-      sharedLibs = [ "${pkgs.DisnixService}/share/java/DisnixConnection.jar"
-                     "${pkgs.dbus_java}/share/java/dbus.jar" ];
-      webapps = [ pkgs.DisnixService ];
     };
   };
 
