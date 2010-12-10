@@ -24,6 +24,10 @@
       enable = true;
     };
     
+    disnix = {
+      enable = true;
+    };
+    
     xserver = {
       enable = true;
       
@@ -49,7 +53,10 @@
       pkgs.subversion
       pkgs.lynx
       pkgs.firefox
-      pkgs.disnix
     ];
+  };
+  
+  deployment = {
+    targetHost = "test3";
   };
 }

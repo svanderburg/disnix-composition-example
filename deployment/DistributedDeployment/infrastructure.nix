@@ -15,7 +15,7 @@
     tomcatPort = 8082;
     mysqlPort = 3307;
     mysqlUsername = "root";
-    mysqlPassword = "admin";
+    mysqlPassword = builtins.readFile ../configurations/mysqlpw;
     targetEPR = http://10.0.2.2:8082/DisnixService/services/DisnixService;
     sshTarget = "localhost:2223";
     system = "i686-linux";
