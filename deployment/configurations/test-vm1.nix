@@ -42,9 +42,5 @@
       pkgs.subversion
       pkgs.lynx
     ];
-  };
-  
-  deployment = {
-    targetHost = "test1";
-  };
+  };  
 }

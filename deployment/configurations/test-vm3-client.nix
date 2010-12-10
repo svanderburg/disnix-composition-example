@@ -54,9 +54,5 @@
       pkgs.lynx
       pkgs.firefox
     ];
-  };
-  
-  deployment = {
-    targetHost = "test3";
-  };
+  };  
 }
