@@ -38,6 +38,7 @@ public class HelloWorldServiceDynamicConnector
 		Options options = lookupServiceClient.getOptions();
 		EndpointReference targetEPR = new EndpointReference(lookupServiceURL);
 		options.setTo(targetEPR);
+		options.setProperty(AddressingConstants.DISABLE_ADDRESSING_FOR_OUT_MESSAGES, Boolean.TRUE);
 	}
 	
 	/**
@@ -51,8 +52,6 @@ public class HelloWorldServiceDynamicConnector
 	 */
 	private RPCServiceClient createRPCService(String name) throws AxisFault
 	{
-		RPCServiceClient serviceClient;
-		
 		try
 		{
 			/* Receive URL of HelloService from the LookupService */
@@ -63,10 +62,11 @@ public class HelloWorldServiceDynamicConnector
 			String helloServiceURL = (String)response[0];
 			
 			/* Create an RPC service client instance for the received Hello Service URL */
-			serviceClient = new RPCServiceClient();
+			RPCServiceClient serviceClient = new RPCServiceClient();
 			Options options = serviceClient.getOptions();
 			EndpointReference targetEPR = new EndpointReference(helloServiceURL);
 			options.setTo(targetEPR);
+			options.setProperty(AddressingConstants.DISABLE_ADDRESSING_FOR_OUT_MESSAGES, Boolean.TRUE);
 			
 			/* Return the RPC service client instance */
 			return serviceClient;
@@ -77,8 +77,8 @@ public class HelloWorldServiceDynamicConnector
 		}
 		finally
 		{
-			serviceClient.cleanup();
-			serviceClient.cleanupTransport();
+			lookupServiceClient.cleanup();
+			lookupServiceClient.cleanupTransport();
 		}
 	}
 	
@@ -90,7 +90,7 @@ public class HelloWorldServiceDynamicConnector
 	 */
 	public String getHelloWorld() throws AxisFault
 	{
-		RPCServiceClient serviceClient;
+		RPCServiceClient serviceClient = null;
 		
 		try
 		{
@@ -110,8 +110,11 @@ public class HelloWorldServiceDynamicConnector
 		}
 		finally
 		{
-			serviceClient.cleanup();
-			serviceClient.cleanupTransport();
+			if(serviceClient != null)
+			{
+				serviceClient.cleanup();
+				serviceClient.cleanupTransport();
+			}
 		}
 	}
 }

@@ -1,8 +1,9 @@
-{stdenv, libxslt, distribution}:
+{stdenv, libxslt, distribution, services}:
 
 let
   /* Inherit some builtin functions for simplicity */
-  inherit (builtins) toXML head tail;
+  inherit (builtins) toXML head tail getAttr attrNames;
+  inherit (stdenv.lib) filter;
   
   /* Function that filters all the Axis2 services from the distribution model */
   filterAxis2WebServices = distribution:
@@ -17,14 +18,31 @@ let
    * Creates a list of service name, target hostname and tomcat ports
    * for each entry of the Axis2 webservice type from the distribution model
    */
-  mapping = map (distributionItem: 
+  /*mapping = map (distributionItem: 
                  { service = distributionItem.service.name;
 		   target = distributionItem.target.hostname;
 		   tomcatPort = if distributionItem.target ? tomcatPort then distributionItem.target.tomcatPort else 8080;
-		 }) (filterAxis2WebServices distribution);
+		 }) (filterAxis2WebServices distribution);*/
   
+  webServiceNames = filter (serviceName: (getAttr serviceName services).type == "tomcat-webapplication") (attrNames distribution);
+  
+  mapping = webServiceNames:
+    if webServiceNames == [] then []
+    else
+      let
+        serviceName = head webServiceNames;
+	targets = getAttr serviceName distribution;
+      in
+      map (target:
+        { service = serviceName;
+	  target = target.hostname;
+	  tomcatPort = if target ? tomcatPort then target.tomcatPort else 8080;
+	}) targets
+      ++ mapping (tail webServiceNames)
+  ;
+      
   /* Creates an XML representation of the mapping created above */
-  mappingXML = toXML mapping;
+  mappingXML = toXML (mapping webServiceNames);
   
   /*
    * XSL stylesheet which transforms the distribution model to

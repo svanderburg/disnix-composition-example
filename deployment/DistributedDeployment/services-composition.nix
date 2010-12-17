@@ -10,23 +10,15 @@
 
 # Import the packages model of the Hello World example, which captures the intra-dependencies
 let pkgs = import ../top-level/all-packages.nix { 
-   inherit distribution; # Pass distribution model to the packages model, so that the lookup services can use them
-   inherit system;
+  inherit system;
 };
 in
 rec {
-  HelloService = {
-    name = "HelloService";
-    pkg = pkgs.HelloService;
-    dependsOn = {};
-    type = "tomcat-webapplication";
-  };
-  
   HelloWorldService = {
     name = "HelloWorldService";
     pkg = pkgs.HelloWorldService;
     dependsOn = {
-      inherit HelloService;
+      HelloService = HelloDBService; # Use database backend
     };
     type = "tomcat-webapplication";
   };
@@ -40,33 +32,6 @@ rec {
     type = "tomcat-webapplication";
   };
   
-  LookupService = {
-    name = "LookupService";
-    pkg = pkgs.LookupService;
-    dependsOn = {};
-    type = "tomcat-webapplication";
-  };
-  
-  HelloWorldService2 = {
-    name = "HelloWorldService2";
-    pkg = pkgs.HelloWorldService2;
-    dependsOn = {
-      inherit LookupService;
-      inherit HelloService;
-    };
-    type = "tomcat-webapplication";
-  };
-  
-  HelloWorld2 = {
-    name = "HelloWorld2";
-    pkg = pkgs.HelloWorld2;
-    dependsOn = {
-      HelloWorldService = HelloWorldService2;
-      inherit LookupService;
-    };
-    type = "tomcat-webapplication";
-  };
-    
   HelloMySQLDB = {
     name = "HelloMySQLDB";
     pkg = pkgs.HelloMySQLDB;
@@ -80,13 +45,6 @@ rec {
     dependsOn = {
       inherit HelloMySQLDB;
     };
-    type = "tomcat-webapplication";
-  };
-  
-  LookupService2 = {
-    name = "LookupService2";
-    pkg = pkgs.LookupService2;
-    dependsOn = {};
     type = "tomcat-webapplication";
   };
 }

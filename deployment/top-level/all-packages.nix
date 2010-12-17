@@ -4,6 +4,7 @@
  */
 
 { distribution ? null # Take distribution model as optional input argument, which is needed by the lookup services
+, services ? null # Take services model as optional input argument, which is needed by the lookup services
 , system ? builtins.currentSystem
 }:
 
@@ -25,8 +26,8 @@ rec {
     inherit stdenv apacheAnt axis2;
   };
   
-  LookupConfig = if distribution == null then null else import ../pkgs/LookupConfig {
-    inherit stdenv libxslt distribution;
+  LookupConfig = if distribution == null || services == null then null else import ../pkgs/LookupConfig {
+    inherit stdenv libxslt distribution services;
   };
   
   LookupService = import ../pkgs/LookupService {

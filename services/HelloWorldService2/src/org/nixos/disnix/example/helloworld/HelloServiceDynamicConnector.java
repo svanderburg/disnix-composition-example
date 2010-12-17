@@ -38,6 +38,7 @@ public class HelloServiceDynamicConnector
 		Options options = lookupServiceClient.getOptions();
 		EndpointReference targetEPR = new EndpointReference(lookupServiceURL);
 		options.setTo(targetEPR);
+		options.setProperty(AddressingConstants.DISABLE_ADDRESSING_FOR_OUT_MESSAGES, Boolean.TRUE);
 	}
 	
 	/**
@@ -51,8 +52,6 @@ public class HelloServiceDynamicConnector
 	 */
 	private RPCServiceClient createRPCService(String name) throws AxisFault
 	{
-		RPCServiceClient serviceClient;
-		
 		try
 		{
 			/* Receive URL of HelloService from the LookupService */
@@ -63,10 +62,11 @@ public class HelloServiceDynamicConnector
 			String helloServiceURL = (String)response[0];
 			
 			/* Create an RPC service client instance for the received Hello Service URL */
-			serviceClient = new RPCServiceClient();
+			RPCServiceClient serviceClient = new RPCServiceClient();
 			Options options = serviceClient.getOptions();
 			EndpointReference targetEPR = new EndpointReference(helloServiceURL);
 			options.setTo(targetEPR);
+			options.setProperty(AddressingConstants.DISABLE_ADDRESSING_FOR_OUT_MESSAGES, Boolean.TRUE);
 			
 			/* Return the RPC service client instance */
 			return serviceClient;
@@ -77,8 +77,8 @@ public class HelloServiceDynamicConnector
 		}
 		finally
 		{
-			serviceClient.cleanup();
-			serviceClient.cleanupTransport();
+			lookupServiceClient.cleanup();
+			lookupServiceClient.cleanupTransport();
 		}
 	}
 	
@@ -90,18 +90,19 @@ public class HelloServiceDynamicConnector
 	 */
 	public String getHello() throws AxisFault
 	{
-		RPCServiceClient serviceClient;
+		RPCServiceClient serviceClient = null;
 		
 		try
 		{
 			/* Create a RPCServiceClient which connects to a HelloService instance */
 			serviceClient = createRPCService(serviceName);
-			
+
 			/* Invoke the getHello operation on the HelloService */
 			QName operation = new QName(NAME_SPACE, "getHello");
 			Object[] args = {};
 			Class<?>[] returnTypes = { String.class };
 			Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
+
 			return (String)response[0];
 		}
 		catch(AxisFault ex)
@@ -110,8 +111,11 @@ public class HelloServiceDynamicConnector
 		}
 		finally
 		{
-			serviceClient.cleanup();
-			serviceClient.cleanupTransport();
+			if(serviceClient != null)
+			{
+				serviceClient.cleanup();
+				serviceClient.cleanupTransport();
+			}
 		}
 	}
 }

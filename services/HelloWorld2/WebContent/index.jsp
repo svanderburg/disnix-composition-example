@@ -8,9 +8,10 @@
 Properties props = new Properties();
 props.load(this.getClass().getResourceAsStream("/org/nixos/disnix/example/helloworld/helloworld2.properties"));
 String targetEPR = props.getProperty("lookupservice.targetEPR");
+String helloWorldServiceIdentifier = props.getProperty("helloworldservice.identifier");
 
 /* Create a connector object */
-HelloWorldServiceDynamicConnector connector = new HelloWorldServiceDynamicConnector(targetEPR);
+HelloWorldServiceDynamicConnector connector = new HelloWorldServiceDynamicConnector(targetEPR, helloWorldServiceIdentifier);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
