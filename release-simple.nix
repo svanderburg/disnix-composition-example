@@ -43,12 +43,21 @@ let
 	networkFile = "deployment/DistributedDeployment/network.nix";
 	testScript =
 	  ''
-	    $test1->waitForFile("/var/tomcat/webapps/HelloWorld");	      
-	    $test1->mustSucceed("sleep 30; curl --fail http://test1:8080/HelloWorld/index.jsp >&2");
-	      
+	    $test1->waitForFile("/var/tomcat/webapps/HelloWorld");
+	    my $result = $test1->mustSucceed("sleep 30; curl --fail http://test1:8080/HelloWorld/index.jsp");
+	    
+	    # The entry page should contain Hello World
+	    
+	    if ($result =~ /Hello world/) {
+	        print "Entry page contains: Hello world!\n";
+	    }
+	    else {
+	        die "Entry page should contain Hello world!\n";
+	    }
+	    
 	    $test3->mustSucceed("firefox http://test1:8080/HelloWorld &");
-	    $test3->mustSucceed("sleep 10");
-	      
+	    $test3->waitForWindow(qr/Namoroka/);
+	    $test3->mustSucceed("sleep 30");
 	    $test3->screenshot("screen");
 	  '';
       };              
