@@ -6,17 +6,17 @@
  * which is used to decide how to activate and deactive services. 
  */
  
-{distribution, system}:
+{distribution, system, pkgs}:
 
 # Import the packages model of the Hello World example, which captures the intra-dependencies
-let pkgs = import ../top-level/all-packages.nix { 
-  inherit system;
+let customPkgs = import ../top-level/all-packages.nix { 
+  inherit system pkgs;
 };
 in
 rec {
   HelloWorldService = {
     name = "HelloWorldService";
-    pkg = pkgs.HelloWorldService;
+    pkg = customPkgs.HelloWorldService;
     dependsOn = {
       HelloService = HelloDBService; # Use database backend
     };
@@ -25,7 +25,7 @@ rec {
   
   HelloWorld = {
     name = "HelloWorld";
-    pkg = pkgs.HelloWorld;
+    pkg = customPkgs.HelloWorld;
     dependsOn = {
       inherit HelloWorldService;
     };
@@ -34,14 +34,14 @@ rec {
   
   HelloMySQLDB = {
     name = "HelloMySQLDB";
-    pkg = pkgs.HelloMySQLDB;
+    pkg = customPkgs.HelloMySQLDB;
     dependsOn = {};
     type = "mysql-database";
   };
 
   HelloDBService = {
     name = "HelloDBService";
-    pkg = pkgs.HelloDBServiceWrapper;
+    pkg = customPkgs.HelloDBServiceWrapper;
     dependsOn = {
       inherit HelloMySQLDB;
     };

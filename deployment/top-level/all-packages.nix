@@ -6,11 +6,9 @@
 { distribution ? null # Take distribution model as optional input argument, which is needed by the lookup services
 , services ? null # Take services model as optional input argument, which is needed by the lookup services
 , system ? builtins.currentSystem
+, pkgs
 }:
 
-# Imports the top-level expression from Nixpkgs
-let pkgs = import (builtins.getEnv "NIXPKGS_ALL") { inherit system; };
-in
 with pkgs;
 
 rec {

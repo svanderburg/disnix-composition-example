@@ -6,24 +6,24 @@
  * which is used to decide how to activate and deactive services. 
  */
  
-{distribution, system}:
+{distribution, system, pkgs}:
 
 # Import the packages model of the Hello World example, which captures the intra-dependencies
-let pkgs = import ../top-level/all-packages.nix { 
-  inherit system;
+let customPkgs = import ../top-level/all-packages.nix { 
+  inherit system pkgs;
 };
 in
 rec {
   HelloService = {
     name = "HelloService";
-    pkg = pkgs.HelloService;
+    pkg = customPkgs.HelloService;
     dependsOn = {};
     type = "tomcat-webapplication";
   };
   
   HelloWorldService = {
     name = "HelloWorldService";
-    pkg = pkgs.HelloWorldService;
+    pkg = customPkgs.HelloWorldService;
     dependsOn = {
       inherit HelloService;
     };
@@ -32,7 +32,7 @@ rec {
   
   HelloWorld = {
     name = "HelloWorld";
-    pkg = pkgs.HelloWorld;
+    pkg = customPkgs.HelloWorld;
     dependsOn = {
       inherit HelloWorldService;
     };
