@@ -56,7 +56,7 @@ let
       disnixos.disnixTest {
         name = "HelloWorldExample-lookup";
         tarball = tarball {};
-        manifest = build {};
+        manifest = build { system = "x86_64-linux"; };
 	networkFile = "deployment/DistributedDeployment/network.nix";
 	testScript =
 	  ''
