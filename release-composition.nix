@@ -1,6 +1,5 @@
 { nixpkgs ? /etc/nixos/nixpkgs
 , nixos ? /etc/nixos/nixos
-, system ? builtins.currentSystem
 }:
 
 let
