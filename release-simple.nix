@@ -45,7 +45,7 @@ let
 	installPhase = ''
 	  make DESTDIR=$out install
 	 
-	  echo "doc manual $out/share/doc/WebServicesExample/manual" >> $out/nix-support/hydra-build-products
+	  echo "doc manual $out/share/doc/HelloWorldExample/manual" >> $out/nix-support/hydra-build-products
 	'';
       };
       
