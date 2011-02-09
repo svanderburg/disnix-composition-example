@@ -22,7 +22,32 @@ let
 	src = HelloWorldExample;
         inherit officialRelease;
       };
+    
+    doc =
+      { tarball ? jobs.tarball {} }:
       
+      with import nixpkgs {};
+      
+      releaseTools.nixBuild {
+        name = "HelloWorldExample-doc";
+	version = builtins.readFile ./version;
+	src = tarball;
+	buildInputs = [ libxml2 libxslt dblatex tetex ];
+	
+	buildPhase = ''
+	  cd doc
+	  make docbookrng=${docbook5}/xml/rng/docbook docbookxsl=${docbook5_xsl}/xml/xsl/docbook
+	'';
+	
+	checkPhase = "true";
+	
+	installPhase = ''
+	  make DESTDIR=$out install
+	 
+	  echo "doc manual $out/share/doc/WebServicesExample/manual" >> $out/nix-support/hydra-build-products
+	'';
+      };
+
     build =
       { tarball ? jobs.tarball {}
       , system ? "x86_64-linux"

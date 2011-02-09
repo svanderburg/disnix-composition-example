@@ -1,0 +1,21 @@
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xml:id="chap-introduction">
+
+	<title>Introduction</title>
+
+	<para>
+		This is a trivial example case demonstrating various ways to
+		compose services together. The simplest composition is done by just
+		inheriting the dependency with the same name from the same lexical scope.
+		Another composition strategy shows an alternative composition of the same service.		
+	</para>
+	
+	<para>
+		For each upgrade, services must be rebuilt (because the contents of configuration files change)
+		which makes upgrades expensive in some cases.
+		This example also demonstrates two variants to <emphasis>dynamically</emphasis> compose
+		services together, so that in case of an event in which the location changes no rebuilds
+		are required. 
+	</para>
+</chapter>
