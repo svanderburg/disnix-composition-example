@@ -97,7 +97,7 @@ let
 	    }
 	    
 	    $test3->mustSucceed("firefox http://test1:8080/HelloWorld &");
-	    $test3->waitForWindow(qr/Namoroka/);
+	    $test3->waitForWindow(qr/Tumucumaque/);
 	    $test3->mustSucceed("sleep 30");
 	    $test3->screenshot("screen");
 	  '';
