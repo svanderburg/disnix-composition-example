@@ -86,7 +86,7 @@ let
         testScript =
           ''
             $test1->waitForFile("/var/tomcat/webapps/HelloWorld");
-            my $result = $test1->mustSucceed("sleep 30;");# curl --fail http://test1:8080/HelloWorld/index.jsp");
+            my $result = $test1->mustSucceed("sleep 30; curl --fail http://test1:8080/HelloWorld/index.jsp");
             
             # The entry page should contain Hello World
             
