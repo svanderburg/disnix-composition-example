@@ -1,12 +1,12 @@
-{ nixpkgs ? /etc/nixos/nixpkgs
-, nixos ? /etc/nixos/nixos
+{ nixpkgs ? <nixpkgs>
+, nixos ? <nixos>
 }:
 
 let
   
   jobs = rec {
     tarball =
-      { HelloWorldExample ? {outPath = ./.; rev = 1234;}
+      { disnix_compostion_example ? {outPath = ./.; rev = 1234;}
       , officialRelease ? false}:
     
       let
@@ -17,9 +17,9 @@ let
         };
       in
       disnixos.sourceTarball {
-        name = "HelloWorldExample";
-	version = builtins.readFile ./version;
-	src = HelloWorldExample;
+        name = "disnix-composition-example-lookup-tarball";
+        version = builtins.readFile ./version;
+        src = disnix_compostion_example;
         inherit officialRelease;
       };
     
@@ -29,23 +29,23 @@ let
       with import nixpkgs {};
       
       releaseTools.nixBuild {
-        name = "HelloWorldExample-doc";
-	version = builtins.readFile ./version;
-	src = tarball;
-	buildInputs = [ libxml2 libxslt dblatex tetex ];
-	
-	buildPhase = ''
-	  cd doc
-	  make docbookrng=${docbook5}/xml/rng/docbook docbookxsl=${docbook5_xsl}/xml/xsl/docbook
-	'';
-	
-	checkPhase = "true";
-	
-	installPhase = ''
-	  make DESTDIR=$out install
-	 
-	  echo "doc manual $out/share/doc/HelloWorldExample/manual" >> $out/nix-support/hydra-build-products
-	'';
+        name = "disnix-composition-example-lookup-doc";
+        version = builtins.readFile ./version;
+        src = tarball;
+        buildInputs = [ libxml2 libxslt dblatex tetex ];
+        
+        buildPhase = ''
+          cd doc
+          make docbookrng=${docbook5}/xml/rng/docbook docbookxsl=${docbook5_xsl}/xml/xsl/docbook
+        '';
+        
+        checkPhase = "true";
+        
+        installPhase = ''
+          make DESTDIR=$out install
+         
+          echo "doc manual $out/share/doc/HelloWorldExample/manual" >> $out/nix-support/hydra-build-products
+        '';
       };
 
     build =
@@ -61,12 +61,12 @@ let
         };
       in
       disnixos.buildManifest {
-        name = "HelloWorldExample-lookup";
-	version = builtins.readFile ./version;
-	inherit tarball;
-	servicesFile = "deployment/DistributedDeployment/services-lookup.nix";
-	networkFile = "deployment/DistributedDeployment/network.nix";
-	distributionFile = "deployment/DistributedDeployment/distribution-lookup.nix";
+        name = "disnix-composition-example-lookup";
+        version = builtins.readFile ./version;
+        inherit tarball;
+        servicesFile = "deployment/DistributedDeployment/services-lookup.nix";
+        networkFile = "deployment/DistributedDeployment/network.nix";
+        distributionFile = "deployment/DistributedDeployment/distribution-lookup.nix";
       };
             
     tests = 
@@ -78,29 +78,29 @@ let
         };
       in
       disnixos.disnixTest {
-        name = "HelloWorldExample-lookup";
+        name = "disnix-composition-example-lookup-tests";
         tarball = tarball {};
         manifest = build { system = "x86_64-linux"; };
-	networkFile = "deployment/DistributedDeployment/network.nix";
-	testScript =
-	  ''
-	    $test1->waitForFile("/var/tomcat/webapps/HelloWorld2");
-	    my $result = $test1->mustSucceed("sleep 30; curl --fail http://test1:8080/HelloWorld2/index.jsp");
-	    
-	    # The entry page should contain Hello World
-	    
-	    if ($result =~ /Hello world/) {
-	        print "Entry page contains: Hello world!\n";
-	    }
-	    else {
-	        die "Entry page should contain Hello world!\n";
-	    }
-	    
-	    $test3->mustSucceed("firefox http://test1:8080/HelloWorld2 &");
-	    $test3->waitForWindow(qr/Aurora/);
-	    $test3->mustSucceed("sleep 30");
-	    $test3->screenshot("screen");
-	  '';
+        networkFile = "deployment/DistributedDeployment/network.nix";
+        testScript =
+          ''
+            $test1->waitForFile("/var/tomcat/webapps/HelloWorld2");
+            my $result = $test1->mustSucceed("sleep 30; curl --fail http://test1:8080/HelloWorld2/index.jsp");
+            
+            # The entry page should contain Hello World
+            
+            if ($result =~ /Hello world/) {
+                print "Entry page contains: Hello world!\n";
+            }
+            else {
+                die "Entry page should contain Hello world!\n";
+            }
+            
+            $test3->mustSucceed("firefox http://test1:8080/HelloWorld2 &");
+            $test3->waitForWindow(qr/Nightly/);
+            $test3->mustSucceed("sleep 30");
+            $test3->screenshot("screen");
+          '';
       };
   };
 in
