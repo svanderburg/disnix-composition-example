@@ -51,10 +51,11 @@ public class HelloServiceConnector
 		{
 			throw ex;
 		}
-		finally
+		/* This seems to throw an exception at the second request */
+		/*finally
 		{
 			serviceClient.cleanup();
 			serviceClient.cleanupTransport();
-		}
+		}*/
 	}
 }
