@@ -2,6 +2,10 @@
 
 {
   services = {
+    disnix = {
+      enable = true;
+    };
+    
     openssh = {
       enable = true;
     };
@@ -32,5 +36,5 @@
       pkgs.lynx
       pkgs.firefox
     ];
-  };  
+  };
 }

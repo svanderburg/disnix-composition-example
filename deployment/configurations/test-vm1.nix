@@ -7,6 +7,7 @@
     };
     
     disnix = {
+      enable = true;
       useWebServiceInterface = true;
     };
 
@@ -23,5 +24,5 @@
       pkgs.subversion
       pkgs.lynx
     ];
-  };  
+  };
 }
