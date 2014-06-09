@@ -1,10 +1,10 @@
-{stdenv, apacheAnt, axis2}:
+{stdenv, apacheAnt, jdk, axis2}:
 {HelloWorldService ? null, LookupService ? null}:
 
 stdenv.mkDerivation {
   name = "HelloWorld2";
   src = ../../../services/HelloWorld2;
-  buildInputs = [ apacheAnt ];
+  buildInputs = [ apacheAnt jdk ];
   AXIS2_LIB = "${axis2}/lib";
   buildPhase =
     (if LookupService == null then "" else ''

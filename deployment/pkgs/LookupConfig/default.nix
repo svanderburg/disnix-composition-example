@@ -20,9 +20,9 @@ let
    */
   /*mapping = map (distributionItem: 
                  { service = distributionItem.service.name;
-		   target = distributionItem.target.hostname;
-		   tomcatPort = if distributionItem.target ? tomcatPort then distributionItem.target.tomcatPort else 8080;
-		 }) (filterAxis2WebServices distribution);*/
+                   target = distributionItem.target.hostname;
+                   tomcatPort = if distributionItem.target ? tomcatPort then distributionItem.target.tomcatPort else 8080;
+                 }) (filterAxis2WebServices distribution);*/
   
   webServiceNames = filter (serviceName: (getAttr serviceName services).type == "tomcat-webapplication") (attrNames distribution);
   
@@ -31,13 +31,13 @@ let
     else
       let
         serviceName = head webServiceNames;
-	targets = getAttr serviceName distribution;
+        targets = getAttr serviceName distribution;
       in
       map (target:
         { service = serviceName;
-	  target = target.hostname;
-	  tomcatPort = if target ? tomcatPort then target.tomcatPort else 8080;
-	}) targets
+          target = target.hostname;
+          tomcatPort = if target ? tomcatPort then target.tomcatPort else 8080;
+        }) targets
       ++ mapping (tail webServiceNames)
   ;
       

@@ -1,20 +1,20 @@
 { nixpkgs ? <nixpkgs>
-, nixos ? <nixos>
+, disnix_composition_example ? {outPath = ./.; rev = 1234;}
+, officialRelease ? false
+, systems ? [ "i686-linux" "x86_64-linux" ]
 }:
 
 let
+  pkgs = import nixpkgs {};
   
   jobs = rec {
     
     tarball =
-      { disnix_composition_example ? {outPath = ./.; rev = 1234;}
-      , officialRelease ? false}:
-    
       let
         pkgs = import nixpkgs {};
   
         disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
-          inherit nixpkgs nixos;
+          inherit nixpkgs;
         };
       in
       disnixos.sourceTarball {
@@ -25,19 +25,15 @@ let
       };
     
     doc =
-      { tarball ? jobs.tarball {} }:
-      
-      with import nixpkgs {};
-      
-      releaseTools.nixBuild {
+      pkgs.releaseTools.nixBuild {
         name = "disnix-composition-example-doc";
         version = builtins.readFile ./version;
         src = tarball;
-        buildInputs = [ libxml2 libxslt dblatex tetex ];
+        buildInputs = [ pkgs.libxml2 pkgs.libxslt pkgs.dblatex pkgs.tetex ];
         
         buildPhase = ''
           cd doc
-          make docbookrng=${docbook5}/xml/rng/docbook docbookxsl=${docbook5_xsl}/xml/xsl/docbook
+          make docbookrng=${pkgs.docbook5}/xml/rng/docbook docbookxsl=${pkgs.docbook5_xsl}/xml/xsl/docbook
         '';
         
         checkPhase = "true";
@@ -50,61 +46,80 @@ let
       };
       
     builds =
-      { tarball ? jobs.tarball {}
-      , system ? "x86_64-linux"
-      }:
-      
-      let
-        pkgs = import nixpkgs { inherit system; };
-  
-        disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
-          inherit nixpkgs nixos system;
-        };
-      in
       {
-        simple = disnixos.buildManifest {
-          name = "disnix-composition-example-simple";
-          version = builtins.readFile ./version;
-          inherit tarball;
-          servicesFile = "deployment/DistributedDeployment/services-simple.nix";
-          networkFile = "deployment/DistributedDeployment/network.nix";
-          distributionFile = "deployment/DistributedDeployment/distribution-simple.nix";
-        };
+        simple = pkgs.lib.genAttrs systems (system:
+          let
+            pkgs = import nixpkgs { inherit system; };
+  
+            disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
+              inherit nixpkgs system;
+            };
+          in
+          disnixos.buildManifest {
+            name = "disnix-composition-example-simple";
+            version = builtins.readFile ./version;
+            inherit tarball;
+            servicesFile = "deployment/DistributedDeployment/services-simple.nix";
+            networkFile = "deployment/DistributedDeployment/network.nix";
+            distributionFile = "deployment/DistributedDeployment/distribution-simple.nix";
+          });
         
-        composition = disnixos.buildManifest {
-          name = "disnix-composition-example-composition";
-          version = builtins.readFile ./version;
-          inherit tarball;
-          servicesFile = "deployment/DistributedDeployment/services-composition.nix";
-          networkFile = "deployment/DistributedDeployment/network.nix";
-          distributionFile = "deployment/DistributedDeployment/distribution-composition.nix";
-        };
+        composition = pkgs.lib.genAttrs systems (system:
+          let
+            pkgs = import nixpkgs { inherit system; };
+  
+            disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
+              inherit nixpkgs system;
+            };
+          in
+          disnixos.buildManifest {
+            name = "disnix-composition-example-composition";
+            version = builtins.readFile ./version;
+            inherit tarball;
+            servicesFile = "deployment/DistributedDeployment/services-composition.nix";
+            networkFile = "deployment/DistributedDeployment/network.nix";
+            distributionFile = "deployment/DistributedDeployment/distribution-composition.nix";
+          });
         
-        lookup = disnixos.buildManifest {
-          name = "disnix-composition-example-lookup";
-          version = builtins.readFile ./version;
-          inherit tarball;
-          servicesFile = "deployment/DistributedDeployment/services-lookup.nix";
-          networkFile = "deployment/DistributedDeployment/network.nix";
-          distributionFile = "deployment/DistributedDeployment/distribution-lookup.nix";
-        };
+        lookup = pkgs.lib.genAttrs systems (system:
+          let
+            pkgs = import nixpkgs { inherit system; };
+  
+            disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
+              inherit nixpkgs system;
+            };
+          in
+          disnixos.buildManifest {
+            name = "disnix-composition-example-lookup";
+            version = builtins.readFile ./version;
+            inherit tarball;
+            servicesFile = "deployment/DistributedDeployment/services-lookup.nix";
+            networkFile = "deployment/DistributedDeployment/network.nix";
+            distributionFile = "deployment/DistributedDeployment/distribution-lookup.nix";
+          });
         
-        loadbalancing = disnixos.buildManifest {
-          name = "disnix-composition-example-loadbalancing";
-          version = builtins.readFile ./version;
-          inherit tarball;
-          servicesFile = "deployment/DistributedDeployment/services-loadbalancing.nix";
-          networkFile = "deployment/DistributedDeployment/network.nix";
-          distributionFile = "deployment/DistributedDeployment/distribution-loadbalancing.nix";
-        };
+        loadbalancing = pkgs.lib.genAttrs systems (system:
+          let
+            pkgs = import nixpkgs { inherit system; };
+  
+            disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
+              inherit nixpkgs system;
+            };
+          in
+          disnixos.buildManifest {
+            name = "disnix-composition-example-loadbalancing";
+            version = builtins.readFile ./version;
+            inherit tarball;
+            servicesFile = "deployment/DistributedDeployment/services-loadbalancing.nix";
+            networkFile = "deployment/DistributedDeployment/network.nix";
+            distributionFile = "deployment/DistributedDeployment/distribution-loadbalancing.nix";
+          });
       };
             
     tests =
-      let 
-        pkgs = import nixpkgs {};
-  
+      let
         disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
-          inherit nixpkgs nixos;
+          inherit nixpkgs;
         };
       in
       {

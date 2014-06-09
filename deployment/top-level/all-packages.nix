@@ -11,15 +11,15 @@
 
 rec {
   HelloService = import ../pkgs/HelloService {
-    inherit (pkgs) stdenv apacheAnt axis2;
+    inherit (pkgs) stdenv apacheAnt jdk axis2;
   };
   
   HelloWorldService = import ../pkgs/HelloWorldService {
-    inherit (pkgs) stdenv apacheAnt axis2;
+    inherit (pkgs) stdenv apacheAnt jdk axis2;
   };
 
   HelloWorld = import ../pkgs/HelloWorld {
-    inherit (pkgs) stdenv apacheAnt axis2;
+    inherit (pkgs) stdenv apacheAnt jdk axis2;
   };
   
   LookupConfig = if distribution == null || services == null then null else import ../pkgs/LookupConfig {
@@ -28,24 +28,24 @@ rec {
   };
   
   LookupService = import ../pkgs/LookupService {
-    inherit (pkgs) stdenv apacheAnt axis2;
+    inherit (pkgs) stdenv apacheAnt jdk axis2;
     inherit LookupConfig;
   };
 
   HelloWorldService2 = import ../pkgs/HelloWorldService2 {
-    inherit (pkgs) stdenv apacheAnt axis2;
+    inherit (pkgs) stdenv apacheAnt jdk axis2;
   };
 
   HelloWorld2 = import ../pkgs/HelloWorld2 {
-    inherit (pkgs) stdenv apacheAnt axis2;
+    inherit (pkgs) stdenv apacheAnt jdk axis2;
   };
   
   HelloMySQLDB = import ../pkgs/HelloMySQLDB {
     inherit (pkgs) stdenv;
-  };    
+  };
   
   HelloDBService = import ../pkgs/HelloDBService {
-    inherit (pkgs) stdenv apacheAnt axis2;
+    inherit (pkgs) stdenv apacheAnt jdk axis2;
   };
   
   HelloDBServiceWrapper = import ../pkgs/HelloDBService/wrapper.nix {
@@ -54,7 +54,7 @@ rec {
   };
   
   LookupService2 = import ../pkgs/LookupService2 {
-    inherit (pkgs) stdenv apacheAnt axis2;
+    inherit (pkgs) stdenv apacheAnt jdk axis2;
     inherit LookupConfig;
   };
 }
