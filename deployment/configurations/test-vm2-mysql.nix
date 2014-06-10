@@ -13,6 +13,7 @@
 
     mysql = {
       enable = true;
+      package = pkgs.mysql;
       rootPassword = ./mysqlpw;
       initialScript = ./mysqlscript;
     };
@@ -23,6 +24,8 @@
       catalinaOpts = "-Xms64m -Xmx256m";
     };
   };
+  
+  networking.firewall.allowedTCPPorts = [ 3306 8080 ];
 
   environment = {
     systemPackages = [
