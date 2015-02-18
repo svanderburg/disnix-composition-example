@@ -58,7 +58,7 @@ stdenv.mkDerivation {
    * the lookup service understands
    */
   buildCommand = ''
-    ensureDir $out
+    mkdir -p $out
     
     cat > mapping.xml <<EOF
     ${mappingXML}

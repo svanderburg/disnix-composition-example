@@ -4,7 +4,7 @@
 stdenv.mkDerivation {
   name = "HelloDBServiceWrapper";
   buildCommand = ''
-    ensureDir $out/conf/Catalina
+    mkdir -p $out/conf/Catalina
     cat > $out/conf/Catalina/HelloDBService.xml <<EOF
     <Context>
       <Resource name="jdbc/HelloMySQLDB" auth="Container" type="javax.sql.DataSource"

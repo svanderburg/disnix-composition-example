@@ -8,7 +8,7 @@ stdenv.mkDerivation {
   AXIS2_WEBAPP = "${axis2}/webapps/axis2";
   buildPhase = "ant generate.war";
   installPhase = ''
-    ensureDir $out/webapps
+    mkdir -p $out/webapps
     cp *.war $out/webapps
-  '';    
+  '';
 }

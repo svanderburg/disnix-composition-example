@@ -15,8 +15,8 @@ stdenv.mkDerivation {
       # Generate the webapplication archive
       ant generate.war
     '';
-  installPhase = ''    
-    ensureDir $out/webapps
+  installPhase = ''
+    mkdir -p $out/webapps
     cp *.war $out/webapps
   '';
 }
