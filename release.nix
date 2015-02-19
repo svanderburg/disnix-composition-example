@@ -125,8 +125,8 @@ let
       {
         simple = disnixos.disnixTest {
           name = "disnix-composition-example-simple-test";
-          tarball = tarball {};
-          manifest = (builds { system = "x86_64-linux"; }).simple;
+          inherit tarball;
+          manifest = builtins.getAttr (builtins.currentSystem) (builds.simple);
           networkFile = "deployment/DistributedDeployment/network.nix";
           testScript =
             ''
@@ -150,8 +150,8 @@ let
         
         composition = disnixos.disnixTest {
           name = "disnix-composition-example-composition-test";
-          tarball = tarball {};
-          manifest = (builds { system = "x86_64-linux"; }).composition;
+          inherit tarball;
+          manifest = builtins.getAttr (builtins.currentSystem) (builds.composition);
           networkFile = "deployment/DistributedDeployment/network.nix";
           testScript =
             ''
@@ -175,8 +175,8 @@ let
         
         lookup = disnixos.disnixTest {
           name = "disnix-composition-example-lookup-test";
-          tarball = tarball {};
-          manifest = (builds { system = "x86_64-linux"; }).lookup;
+          inherit tarball;
+          manifest = builtins.getAttr (builtins.currentSystem) (builds.lookup);
           networkFile = "deployment/DistributedDeployment/network.nix";
           testScript =
             ''
@@ -200,8 +200,8 @@ let
         
         loadbalancing = disnixos.disnixTest {
           name = "disnix-composition-example-loadbalancing-test";
-          tarball = tarball {};
-          manifest = (builds { system = "x86_64-linux"; }).loadbalancing;
+          inherit tarball;
+          manifest = builtins.getAttr (builtins.currentSystem) (builds.loadbalancing);
           networkFile = "deployment/DistributedDeployment/network.nix";
           testScript =
             ''
