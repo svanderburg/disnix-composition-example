@@ -9,52 +9,31 @@
 , pkgs
 }:
 
-rec {
-  HelloService = import ../pkgs/HelloService {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
-  
-  HelloWorldService = import ../pkgs/HelloWorldService {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
+let
+  callPackage = pkgs.lib.callPackageWith (pkgs // self);
 
-  HelloWorld = import ../pkgs/HelloWorld {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
+  self = {
+    HelloService = callPackage ../pkgs/HelloService { };
   
-  LookupConfig = if distribution == null || services == null then null else import ../pkgs/LookupConfig {
-    inherit (pkgs) stdenv libxslt;
-    inherit distribution services;
-  };
-  
-  LookupService = import ../pkgs/LookupService {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-    inherit LookupConfig;
-  };
+    HelloWorldService = callPackage ../pkgs/HelloWorldService { };
 
-  HelloWorldService2 = import ../pkgs/HelloWorldService2 {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
+    HelloWorld = callPackage ../pkgs/HelloWorld { };
+  
+    LookupConfig = if distribution == null || services == null then null else callPackage ../pkgs/LookupConfig { };
+  
+    LookupService = callPackage ../pkgs/LookupService { };
 
-  HelloWorld2 = import ../pkgs/HelloWorld2 {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
+    HelloWorldService2 = callPackage ../pkgs/HelloWorldService2 { };
+
+    HelloWorld2 = callPackage ../pkgs/HelloWorld2 { };
   
-  HelloMySQLDB = import ../pkgs/HelloMySQLDB {
-    inherit (pkgs) stdenv;
-  };
+    HelloMySQLDB = callPackage ../pkgs/HelloMySQLDB { };
   
-  HelloDBService = import ../pkgs/HelloDBService {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
+    HelloDBService = callPackage ../pkgs/HelloDBService { };
   
-  HelloDBServiceWrapper = import ../pkgs/HelloDBService/wrapper.nix {
-    inherit (pkgs) stdenv;
-    inherit HelloDBService;
-  };
+    HelloDBServiceWrapper = callPackage ../pkgs/HelloDBService/wrapper.nix { };
   
-  LookupService2 = import ../pkgs/LookupService2 {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-    inherit LookupConfig;
+    LookupService2 = callPackage ../pkgs/LookupService2 { };
   };
-}
+in
+self
