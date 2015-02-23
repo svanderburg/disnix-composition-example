@@ -19,7 +19,9 @@ let
 
     HelloWorld = callPackage ../pkgs/HelloWorld { };
   
-    LookupConfig = if distribution == null || services == null then null else callPackage ../pkgs/LookupConfig { };
+    LookupConfig = if distribution == null || services == null then null else callPackage ../pkgs/LookupConfig {
+      inherit services distribution;
+    };
   
     LookupService = callPackage ../pkgs/LookupService { };
 
