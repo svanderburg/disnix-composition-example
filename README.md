@@ -130,6 +130,18 @@ The services can be deployed by running the following commands:
 The `service-simple.nix` and `distribution-simple.nix` files can be replaced by
 the models for the other variants, such as `service-lookup.nix`.
 
+Running the system
+==================
+After the system has been deployed, open a web browser and type the following URL:
+
+    http://test1:8080/HelloWorld
+
+The `test1` hostname must be replaced by the real hostname of the machine to
+which the web application front-end is deployed. Check the distribution model for
+this. If the network expression is used included in this example, the third
+machine in the network machine automatically boots into IceWM and includes the
+Mozilla Firefox web browser for convenience.
+
 License
 =======
 This package is released under the [MIT license](http://opensource.org/licenses/MIT).
