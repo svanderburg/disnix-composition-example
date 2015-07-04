@@ -14,7 +14,6 @@
       enable = true;
       
       displayManager = {
-        slim.enable = false;
         auto.enable = true;
       };
       
