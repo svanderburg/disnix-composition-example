@@ -6,7 +6,7 @@
  * which is used to decide how to activate and deactive services. 
  */
  
-{distribution, system, pkgs}:
+{distribution, invDistribution, system, pkgs}:
 
 # Import the packages model of the Hello World example, which captures the intra-dependencies
 let customPkgs = import ../top-level/all-packages.nix { 
