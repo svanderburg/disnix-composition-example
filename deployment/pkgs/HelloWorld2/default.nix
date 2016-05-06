@@ -9,8 +9,8 @@ stdenv.mkDerivation {
   buildPhase =
     (if LookupService == null then "" else ''
         # Write the connection settings of the LookupService to a properties file
-        ( echo "lookupservice.targetEPR=http://${LookupService.target.hostname}:${toString LookupService.target.tomcatPort}/${LookupService.name}/services/${LookupService.name}"
-	  echo "helloworldservice.identifier=${HelloWorldService.name}" ) > src/org/nixos/disnix/example/helloworld/helloworld2.properties
+        ( echo "lookupservice.targetEPR=http://${LookupService.target.properties.hostname}:${toString LookupService.target.container.tomcatPort}/${LookupService.name}/services/${LookupService.name}"
+          echo "helloworldservice.identifier=${HelloWorldService.name}" ) > src/org/nixos/disnix/example/helloworld/helloworld2.properties
       '') +
     ''
       # Generate the webapplication archive

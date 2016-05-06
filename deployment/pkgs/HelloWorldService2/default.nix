@@ -9,7 +9,7 @@ stdenv.mkDerivation {
   AXIS2_WEBAPP = "${axis2}/webapps/axis2";
   buildPhase = (if LookupService == null then "" else ''
       # Write the connection settings of the LookupService to a properties file
-      ( echo "lookupservice.targetEPR=http://${LookupService.target.hostname}:${toString LookupService.target.tomcatPort}/${LookupService.name}/services/${LookupService.name}" 
+      ( echo "lookupservice.targetEPR=http://${LookupService.target.properties.hostname}:${toString LookupService.target.container.tomcatPort}/${LookupService.name}/services/${LookupService.name}" 
         echo "helloservice.identifier=${HelloService.name}" ) > src/org/nixos/disnix/example/helloworld/helloworldservice2.properties
     '') +
   ''

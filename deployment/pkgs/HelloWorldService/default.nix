@@ -10,7 +10,7 @@ stdenv.mkDerivation {
   buildPhase =
     (if HelloService == null then "" else ''
         # Write the connection settings of the HelloService to a properties file
-        echo "helloservice.targetEPR=http://${HelloService.target.hostname}:${toString HelloService.target.tomcatPort}/${HelloService.name}/services/${HelloService.name}" > src/org/nixos/disnix/example/helloworld/helloworldservice.properties
+        echo "helloservice.targetEPR=http://${HelloService.target.properties.hostname}:${toString HelloService.target.container.tomcatPort}/${HelloService.name}/services/${HelloService.name}" > src/org/nixos/disnix/example/helloworld/helloworldservice.properties
       '') +
     ''
       # Generate the webapplication archive

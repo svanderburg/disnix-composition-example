@@ -18,11 +18,6 @@ let
    * Creates a list of service name, target hostname and tomcat ports
    * for each entry of the Axis2 webservice type from the distribution model
    */
-  /*mapping = map (distributionItem: 
-                 { service = distributionItem.service.name;
-                   target = distributionItem.target.hostname;
-                   tomcatPort = if distributionItem.target ? tomcatPort then distributionItem.target.tomcatPort else 8080;
-                 }) (filterAxis2WebServices distribution);*/
   
   webServiceNames = filter (serviceName: (getAttr serviceName services).type == "tomcat-webapplication") (attrNames distribution);
   
@@ -35,12 +30,12 @@ let
       in
       map (target:
         { service = serviceName;
-          target = target.hostname;
-          tomcatPort = if target ? tomcatPort then target.tomcatPort else 8080;
+          target = target.properties.hostname;
+          tomcatPort = if target ? containers ? tomcat-webapplication ? tomcatPort then target.containers.tomcat-webapplication.tomcatPort else 8080;
         }) targets
       ++ mapping (tail webServiceNames)
   ;
-      
+  
   /* Creates an XML representation of the mapping created above */
   mappingXML = toXML (mapping webServiceNames);
   
