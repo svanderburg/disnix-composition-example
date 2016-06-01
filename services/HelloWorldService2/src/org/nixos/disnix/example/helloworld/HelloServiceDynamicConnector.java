@@ -52,34 +52,22 @@ public class HelloServiceDynamicConnector
 	 */
 	private RPCServiceClient createRPCService(String name) throws AxisFault
 	{
-		try
-		{
-			/* Receive URL of HelloService from the LookupService */
-			QName operation = new QName(NAME_SPACE, "getServiceURL");
-			Object[] args = { name };
-			Class<?>[] returnTypes = { String.class };
-			Object[] response = lookupServiceClient.invokeBlocking(operation, args, returnTypes);
-			String helloServiceURL = (String)response[0];
-			
-			/* Create an RPC service client instance for the received Hello Service URL */
-			RPCServiceClient serviceClient = new RPCServiceClient();
-			Options options = serviceClient.getOptions();
-			EndpointReference targetEPR = new EndpointReference(helloServiceURL);
-			options.setTo(targetEPR);
-			options.setProperty(AddressingConstants.DISABLE_ADDRESSING_FOR_OUT_MESSAGES, Boolean.TRUE);
-			
-			/* Return the RPC service client instance */
-			return serviceClient;
-		}
-		catch(AxisFault ex)
-		{
-			throw ex;
-		}
-		finally
-		{
-			lookupServiceClient.cleanup();
-			lookupServiceClient.cleanupTransport();
-		}
+		/* Receive URL of HelloService from the LookupService */
+		QName operation = new QName(NAME_SPACE, "getServiceURL");
+		Object[] args = { name };
+		Class<?>[] returnTypes = { String.class };
+		Object[] response = lookupServiceClient.invokeBlocking(operation, args, returnTypes);
+		String helloServiceURL = (String)response[0];
+		
+		/* Create an RPC service client instance for the received Hello Service URL */
+		RPCServiceClient serviceClient = new RPCServiceClient();
+		Options options = serviceClient.getOptions();
+		EndpointReference targetEPR = new EndpointReference(helloServiceURL);
+		options.setTo(targetEPR);
+		options.setProperty(AddressingConstants.DISABLE_ADDRESSING_FOR_OUT_MESSAGES, Boolean.TRUE);
+		
+		/* Return the RPC service client instance */
+		return serviceClient;
 	}
 	
 	/**
