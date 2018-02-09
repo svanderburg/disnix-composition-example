@@ -1,0 +1,82 @@
+<project name="HelloWorldCycle" basedir="." default="compile">
+	<!-- Sets the deploy/build directory to build -->
+	<property name="deploybuild.dir" value="build" />
+	
+	<!-- Imports environment variables as properties -->
+	<property environment="env"/>
+	
+	<!-- Sets the location of the Axis2 libraries to the AXIS2_LIB
+		 environment variable -->
+	<condition property="AXIS2_LIB" value="${env.AXIS2_LIB}">
+		<isset property="env.AXIS2_LIB"/>
+	</condition>
+	
+	<!-- Sets the location of the Axis2 web application container -->
+	<condition property="AXIS2_WEBAPP" value="${env.AXIS2_WEBAPP}">
+		<isset property="env.AXIS2_WEBAPP" />
+	</condition>
+	
+	<!-- Sets the classpath which is used by the Java compiler -->
+	<path id="service.classpath">
+		<!-- Add all libraries in this project to the classpath -->
+		<fileset dir="${basedir}">
+			<include name="*.jar" />
+		</fileset>
+		
+		<!-- Add all Axis2 libraries to the classpath -->
+		<fileset dir="${AXIS2_LIB}">
+    		<include name="*.jar"/>
+    	</fileset>
+	</path>
+
+	<!-- Compiles all the Java sources and stores the output in the build directory -->
+	<target name="compile">
+		<mkdir dir="${deploybuild.dir}"/>			
+		
+		<!-- Compile all Java files -->
+		<javac debug="on"
+			   fork="true"
+			   destdir="${deploybuild.dir}"
+			   srcdir="${basedir}/src"
+			   classpathref="service.classpath" />
+	</target>
+	
+	<!-- Generates an Axis2 archive for this webservice -->
+	<target name="generate.service.aar" depends="compile">
+		<!-- Copy all meta data to the bin directory -->
+		<mkdir dir="${deploybuild.dir}/META-INF" />
+		<copy toDir="${deploybuild.dir}/META-INF">
+			<fileset dir="META-INF" includes="*" />			
+		</copy>
+			
+		<!-- Create an archive with all relevant files from the bin directory -->
+		<mkdir dir="${deploybuild.dir}/WEB-INF/services" />
+		<jar destfile="${deploybuild.dir}/WEB-INF/services/HelloService.aar">			
+			<fileset dir="${deploybuild.dir}" includes="META-INF/* org/nixos/disnix/example/helloworld/*" />
+		</jar>
+	</target>
+
+	<!-- Generates an web application archive for this web application -->
+	<target name="generate.war" depends="generate.service.aar">		
+		<!-- Copy all properties files to the build directory -->
+		<copy toDir="${deploybuild.dir}/org/nixos/disnix/example/helloworld">
+			<fileset dir="src/org/nixos/disnix/example/helloworld" includes="*.properties" />			
+		</copy>
+		
+		<!-- Create an archive with all relevant files from the build directory -->
+		<war destfile="HelloWorldCycle.war" needxmlfile="false">
+			<fileset dir="WebContent" includes="*.jsp" />
+			<fileset dir="${AXIS2_WEBAPP}" />
+			<fileset dir="${deploybuild.dir}" includes="WEB-INF/services/HelloService.aar" />
+			<classes dir="${deploybuild.dir}">
+				<include name="org/nixos/disnix/example/helloworld/*" />
+			</classes>
+		</war>
+	</target>
+	
+	<!-- Removes all the generated code and generated archives -->
+	<target name="clean">
+		<delete file="HelloWorldCycle.war" />
+		<delete dir="${deploybuild.dir}" />
+	</target>
+</project>

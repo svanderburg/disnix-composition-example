@@ -45,13 +45,25 @@ uses different variants of the web application front end and the
 rebuilds are required of all the other services (except when the location of the
 lookup service changes).
 
-Loadbalancing variant
----------------------
-![Loadbalancing architecture](doc/architecture-loadbalancing.png)
+Load balancing variant
+----------------------
+![Load balancing architecture](doc/architecture-loadbalancing.png)
 
-The last variant uses a load balancer using the round-robin scheduling method to
-forward request to multiple instances of the same service, to achieve a simple
-form of load balancing.
+The fourth variant uses a load balancer using the round-robin scheduling method
+to forward request to multiple instances of the same service, to achieve a
+simple form of load balancing.
+
+Cyclic variant
+--------------
+![Cyclic architecture](doc/architecture-cyclic.png)
+
+The last variant composes two services together that are mutually dependent on
+each other. To allow such kinds of deployments, we must use a special attribute
+in the Disnix deployment system specifying that the activation order does not
+matter.
+
+Both services are servers and clients at the same time. They consult each other
+to obtain the 'Hello world!' message and display the result.
 
 Usage
 =====
