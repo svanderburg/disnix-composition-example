@@ -137,7 +137,7 @@ let
               }
 
               $test3->mustSucceed("firefox http://test1:8080/HelloWorld/index.jsp &");
-              $test3->waitForWindow(qr/Nightly/);
+              $test3->waitForWindow(qr/Firefox/);
               $test3->mustSucceed("sleep 30");
               $test3->screenshot("screen");
           '';
@@ -162,7 +162,7 @@ let
               }
 
               $test3->mustSucceed("firefox http://test1:8080/HelloWorld &");
-              $test3->waitForWindow(qr/Nightly/);
+              $test3->waitForWindow(qr/Firefox/);
               $test3->mustSucceed("sleep 30");
               $test3->screenshot("screen");
             '';
@@ -187,7 +187,7 @@ let
               }
 
               $test3->mustSucceed("firefox http://test1:8080/HelloWorld2 &");
-              $test3->waitForWindow(qr/Nightly/);
+              $test3->waitForWindow(qr/Firefox/);
               $test3->mustSucceed("sleep 30");
               $test3->screenshot("screen");
             '';
@@ -212,7 +212,7 @@ let
               }
 
               $test3->mustSucceed("firefox http://test1:8080/HelloWorld2 &");
-              $test3->waitForWindow(qr/Nightly/);
+              $test3->waitForWindow(qr/Firefox/);
               $test3->mustSucceed("sleep 30");
               $test3->screenshot("screen");
             '';
@@ -237,7 +237,7 @@ let
               }
 
               $test3->mustSucceed("firefox http://test1:8080/HelloWorldCycle &");
-              $test3->waitForWindow(qr/Nightly/);
+              $test3->waitForWindow(qr/Firefox/);
               $test3->mustSucceed("sleep 30");
               $test3->screenshot("screen");
             '';
