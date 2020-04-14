@@ -5,7 +5,7 @@
  * This model also captures the inter-dependencies of a service and its type
  * which is used to decide how to activate and deactive services. 
  */
- 
+
 {distribution, invDistribution, system, pkgs}:
 
 # Import the packages model of the Hello World example, which captures the intra-dependencies
@@ -15,7 +15,7 @@ let
     inherit services; # Pass services model to the packages model, so that the lookup services can use them
     inherit system pkgs;
   };
-  
+
   services = rec {
     HelloService = {
       name = "HelloService";
@@ -23,14 +23,14 @@ let
       dependsOn = {};
       type = "tomcat-webapplication";
     };
-  
+
     LookupService = {
       name = "LookupService";
       pkg = customPkgs.LookupService;
       dependsOn = {};
       type = "tomcat-webapplication";
     };
-  
+
     HelloWorldService2 = {
       name = "HelloWorldService2";
       pkg = customPkgs.HelloWorldService2;
@@ -40,7 +40,7 @@ let
       };
       type = "tomcat-webapplication";
     };
-  
+
     HelloWorld2 = {
       name = "HelloWorld2";
       pkg = customPkgs.HelloWorld2;

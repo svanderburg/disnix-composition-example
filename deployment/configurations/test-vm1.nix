@@ -5,7 +5,7 @@
     openssh = {
       enable = true;
     };
-    
+
     disnix = {
       enable = true;
       useWebServiceInterface = true;
@@ -17,7 +17,7 @@
       catalinaOpts = "-Xms64m -Xmx256m";
     };
   };
-  
+
   networking.firewall.allowedTCPPorts = [ 8080 ];
 
   environment = {

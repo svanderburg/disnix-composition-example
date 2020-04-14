@@ -5,7 +5,7 @@
  * This model also captures the inter-dependencies of a service and its type
  * which is used to decide how to activate and deactive services.
  */
- 
+
 {distribution, invDistribution, system, pkgs}:
 
 # Import the packages model of the Hello World example, which captures the intra-dependencies

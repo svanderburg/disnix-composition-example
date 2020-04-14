@@ -22,7 +22,7 @@ rec {
     };
     type = "tomcat-webapplication";
   };
-  
+
   HelloWorld = {
     name = "HelloWorld";
     pkg = customPkgs.HelloWorld;
@@ -31,10 +31,14 @@ rec {
     };
     type = "tomcat-webapplication";
   };
-  
-  HelloMySQLDB = {
+
+  HelloMySQLDB = rec {
     name = "HelloMySQLDB";
-    pkg = customPkgs.HelloMySQLDB;
+    mysqlUsername = "hellomysqldb";
+    mysqlPassword = "hellomysqldb";
+    pkg = customPkgs.HelloMySQLDB {
+      inherit mysqlUsername mysqlPassword;
+    };
     dependsOn = {};
     type = "mysql-database";
   };
