@@ -1,7 +1,7 @@
 {infrastructure}:
 
 {
-  simpleAppservingTomcat = [ infrastructure.test1 infrastructure.test2 ];
+  tomcat = [ infrastructure.test1 infrastructure.test2 ];
   axis2 = [ infrastructure.test1 ];
 
   HelloService = [ infrastructure.test1 ];

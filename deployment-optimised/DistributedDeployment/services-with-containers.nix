@@ -24,7 +24,7 @@ in
 rec {
 ### Container providers
 
-  simpleAppservingTomcat = constructors.simpleAppservingTomcat {
+  tomcat = constructors.simpleAppservingTomcat {
     httpPort = 8080;
     commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
     type = processType;
