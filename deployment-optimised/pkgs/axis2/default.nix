@@ -21,6 +21,7 @@ let
       catalinaBaseDir=${catalinaBaseDir}
       axis2BaseDir=${axis2BaseDir}
       axis2Port=${toString axis2Port}
+      timeout=30
       EOF
 
       # Copy the Dysnomia module that manages Axis2 web services

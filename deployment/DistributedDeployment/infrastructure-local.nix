@@ -1,0 +1,3 @@
+{
+  localhost.properties.hostname = "localhost";
+}

@@ -5,15 +5,16 @@
 , cacheDir ? "${stateDir}/cache"
 , tmpDir ? (if stateDir == "/var" then "/tmp" else "${stateDir}/tmp")
 , forceDisableUserChange ? false
-, processManager ? "sysvinit"
+, processManager ? "systemd"
+, nix-processmgmt ? ../../../nix-processmgmt
 }:
 
 let
-  processType = import ../../../nix-processmgmt/nixproc/derive-dysnomia-process-type.nix {
+  processType = import "${nix-processmgmt}/nixproc/derive-dysnomia-process-type.nix" {
     inherit processManager;
   };
 
-  constructors = import ../../../nix-processmgmt/examples/service-containers-agnostic/constructors.nix {
+  constructors = import "${nix-processmgmt}/examples/service-containers-agnostic/constructors.nix" {
     inherit pkgs stateDir runtimeDir logDir cacheDir tmpDir forceDisableUserChange processManager;
   };
 

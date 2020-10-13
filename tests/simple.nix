@@ -1,9 +1,8 @@
-{disnixos, tarball, manifest}:
+{disnixos, tarball, manifest, networkFile}:
 
 disnixos.disnixTest {
   name = "disnix-composition-example-simple-test";
-  inherit tarball manifest;
-  networkFile = "deployment/DistributedDeployment/network.nix";
+  inherit tarball manifest networkFile;
   testScript =
     ''
       test1.wait_for_file("/var/tomcat/webapps/HelloWorld")
