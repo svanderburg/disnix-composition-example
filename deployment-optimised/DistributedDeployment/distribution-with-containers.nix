@@ -2,9 +2,9 @@
 
 {
   tomcat = [ infrastructure.test1 infrastructure.test2 ];
-  axis2 = [ infrastructure.test1 ];
+  axis2 = [ infrastructure.test2 ];
 
-  HelloService = [ infrastructure.test1 ];
-  HelloWorldService = [ infrastructure.test1 ];
-  HelloWorld = [ infrastructure.test2 ];
+  HelloService = [ infrastructure.test2 ];
+  HelloWorldService = [ infrastructure.test2 ];
+  HelloWorld = [ infrastructure.test1 ];
 }
