@@ -57,7 +57,7 @@ Cyclic variant
 --------------
 ![Cyclic architecture](doc/architecture-cyclic.png)
 
-The last variant composes two services together that are mutually dependent on
+This variant composes two services together that are mutually dependent on
 each other. To allow such kinds of deployments, we must use a special attribute
 in the Disnix deployment system specifying that the activation order does not
 matter.
@@ -65,11 +65,32 @@ matter.
 Both services are servers and clients at the same time. They consult each other
 to obtain the 'Hello world!' message and display the result.
 
+Deployment with container services
+----------------------------------
+Another variant that deploys, in addition to the application services
+(the databases and the Java web applications), also the required container
+services (the MySQL DBMS and Apache Tomcat server).
+
+It relies on the presence a Git checkout of the experimental
+[Nix process management framework](https://github.com/svanderburg/nix-processmgmt)
+residing in the same base directory as this repository.
+
+Extreme reuse optimised variant
+-------------------------------
+All the web services embed their own private copy of the Axis2 web service
+container resulting in quite a bit of dependency duplication. It is also
+possible to deploy the Axis2 web application as a reusable container and
+use Disnix to embed each Axis2 application archive in it.
+
+Similar to the previous example, this example relies on the presence of the
+experimental Nix process management framework.
+
 Usage
 =====
 The `deployment/DistributedDeployment` contains all neccessary Disnix models,
 such as a services, infrastructure and distribution models required for
-deployment.
+deployment. The optimised deployment variant models reside in the
+`deployment-optimised/DistributedDeployment` directory.
 
 Deployment using Disnix in a heterogeneous network
 --------------------------------------------------
@@ -88,27 +109,9 @@ the corresponding modules to use them.
 
 The system can be deployed by running the following command:
 
-    $ disnix-env -s services-simple.nix -i infrastructure.nix -d distribution-simple.nix
-
-The `service-simple.nix` and `distribution-simple.nix` files can be replaced by
-the models for the other variants, such as `service-lookup.nix`.
-
-Hybrid deployment of NixOS infrastructure and services using DisnixOS
----------------------------------------------------------------------
-For this scenario you need to install a network of NixOS machines, running the
-Disnix service. This can be done by enabling the following configuration
-option in each `/etc/nixos/configuration.nix` file:
-
-    services.disnix.enable = true;
-
-You may also need to adapt the NixOS configurations to which the `network.nix`
-model is referring, so that they will match the actual system configurations.
-
-The system including its underlying infrastructure can be deployed by using the
-`disnixos-env` command. The following instruction deploys the system including
-the underlying infrastructure.
-
-    $ disnixos-env -s services-simple.nix -n network.nix -d distribution-simple.nix
+```bash
+$ disnix-env -s services-simple.nix -i infrastructure.nix -d distribution-simple.nix
+```
 
 The `service-simple.nix` and `distribution-simple.nix` files can be replaced by
 the models for the other variants, such as `service-lookup.nix`.
@@ -119,7 +122,9 @@ This system can be deployed without adapting any of the models in
 `deployment/DistributedDeployment`. By running the following instruction, the
 variant without the proxy can be deployed in a network of virtual machines:
 
-    $ disnixos-vm-env -s services-simple.nix -n network.nix -d distribution-simple.nix
+```bash
+$ disnixos-vm-env -s services-simple.nix -n network.nix -d distribution-simple.nix
+```
 
 The `service-simple.nix` and `distribution-simple.nix` files can be replaced by
 the models for the other variants, such as `service-lookup.nix`.
@@ -131,13 +136,17 @@ let Disnix do the deployment of the services to these machines.
 
 A virtualbox network can be deployed as follows:
 
-    $ nixops create ./network.nix ./network-virtualbox.nix -d vboxtest
-    $ nixops deploy -d vboxtest
+```bash
+$ nixops create ./network.nix ./network-virtualbox.nix -d vboxtest
+$ nixops deploy -d vboxtest
+```
 
 The services can be deployed by running the following commands:
 
-    $ export NIXOPS_DEPLOYMENT=vboxtest
-    $ disnixos-env -s services-simple.nix -n network.nix -d distribution-simple.nix --use-nixops
+```bash
+$ export NIXOPS_DEPLOYMENT=vboxtest
+$ disnixos-env -s services-simple.nix -n network.nix -d distribution-simple.nix --use-nixops
+```
 
 The `service-simple.nix` and `distribution-simple.nix` files can be replaced by
 the models for the other variants, such as `service-lookup.nix`.

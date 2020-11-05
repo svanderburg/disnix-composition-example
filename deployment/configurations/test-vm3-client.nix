@@ -14,7 +14,7 @@
       enable = true;
 
       displayManager = {
-        lightdm.autoLogin = {
+        autoLogin = {
           enable = true;
           user = "root";
         };

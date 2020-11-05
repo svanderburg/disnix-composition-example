@@ -1,0 +1,9 @@
+digraph G {
+node [style=filled,fillcolor=white,color=black];
+"HelloService" [ label = "HelloService\n(tomcat-webapplication)" ]
+"HelloWorld" [ label = "HelloWorld\n(tomcat-webapplication)" ]
+"HelloWorldService" [ label = "HelloWorldService\n(tomcat-webapplication)" ]
+
+"HelloWorld" -> "HelloWorldService"
+"HelloWorldService" -> "HelloService"
+}

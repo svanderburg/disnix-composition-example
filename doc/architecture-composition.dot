@@ -1,0 +1,11 @@
+digraph G {
+node [style=filled,fillcolor=white,color=black];
+"HelloDBService" [ label = "HelloDBService\n(tomcat-webapplication)" ]
+"HelloMySQLDB" [ label = "HelloMySQLDB\n(mysql-database)" ]
+"HelloWorld" [ label = "HelloWorld\n(tomcat-webapplication)" ]
+"HelloWorldService" [ label = "HelloWorldService\n(tomcat-webapplication)" ]
+
+"HelloDBService" -> "HelloMySQLDB"
+"HelloWorld" -> "HelloWorldService"
+"HelloWorldService" -> "HelloDBService"
+}
