@@ -1,9 +1,9 @@
-{stdenv, libxslt, distribution, services}:
+{stdenv, lib, libxslt, distribution, services}:
 
 let
   /* Inherit some builtin functions for simplicity */
   inherit (builtins) toXML head tail getAttr attrNames;
-  inherit (stdenv.lib) filter;
+  inherit (lib) filter;
   
   /* Function that filters all the Axis2 services from the distribution model */
   filterAxis2WebServices = distribution:
@@ -47,20 +47,20 @@ let
 in
 stdenv.mkDerivation {
   name = "LookupConfig";
-  
-  /* 
+
+  /*
    * Use the given stylesheet to transform the mapping XML to a XML config file
    * the lookup service understands
    */
   buildCommand = ''
     mkdir -p $out
-    
+
     cat > mapping.xml <<EOF
     ${mappingXML}
     EOF
-    
+
     xsltproc ${transformXSL} mapping.xml > $out/lookupserviceconfig.xml
   '';
-  
+
   buildInputs = [ libxslt ];
 }
