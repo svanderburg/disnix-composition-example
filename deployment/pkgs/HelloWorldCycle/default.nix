@@ -1,10 +1,10 @@
-{stdenv, apacheAnt, jdk, axis2}:
+{stdenv, apacheAnt, jdk8, axis2}:
 {HelloWorldCycle ? null}:
 
 stdenv.mkDerivation {
   name = "HelloWorldCycle";
   src = ../../../services/HelloWorldCycle;
-  buildInputs = [ apacheAnt jdk ];
+  buildInputs = [ apacheAnt jdk8 ];
   AXIS2_LIB = "${axis2}/lib";
   AXIS2_WEBAPP = "${axis2}/webapps/axis2";
   buildPhase =

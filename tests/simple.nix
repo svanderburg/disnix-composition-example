@@ -15,7 +15,7 @@ disnixos.disnixTest {
       else:
           raise Exception("Entry page should contain Hello world!")
 
-      test3.succeed("firefox http://test1:8080/HelloWorld/index.jsp &")
+      test3.succeed("xterm -e 'firefox http://test1:8080/HelloWorld/index.jsp' >&2 &")
       test3.wait_for_window("Firefox")
       test3.succeed("sleep 30")
       test3.screenshot("screen")

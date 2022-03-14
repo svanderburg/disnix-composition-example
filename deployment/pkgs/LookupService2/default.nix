@@ -1,9 +1,9 @@
-{stdenv, apacheAnt, axis2, jdk, LookupConfig}:
+{stdenv, apacheAnt, axis2, jdk8, LookupConfig}:
 
 stdenv.mkDerivation {
   name = "LookupService2";
   src = ../../../services/LookupService2;
-  buildInputs = [ apacheAnt jdk ];
+  buildInputs = [ apacheAnt jdk8 ];
   AXIS2_LIB = "${axis2}/lib";
   AXIS2_WEBAPP = "${axis2}/webapps/axis2";
   buildPhase = 
